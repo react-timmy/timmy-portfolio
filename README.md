@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Timmy — Full-Stack AI Developer
 
-## Getting Started
+I help founders and teams turn practical product ideas into polished, reliable web and mobile experiences.
 
-First, run the development server:
+As an AI-first full-stack developer, I work from concept to production: shaping the product, building the interface, connecting the backend, and shipping an experience people enjoy using.
+
+## How I can help
+
+- Build MVPs and production-ready web apps with Next.js, React, and TypeScript
+- Create cross-platform mobile products with React Native
+- Add thoughtful AI features to real products and workflows
+- Turn rough ideas into clear, fast, conversion-focused interfaces
+- Improve existing products with focused feature work and reliable engineering
+
+## Selected work
+
+This portfolio highlights product experiments, client-ready interfaces, FilmSort, and web3/community work. Visit the live site to see the projects and case studies:
+
+**[devtimmy.vercel.app](https://devtimmy.vercel.app)**
+
+For collaborations and client work:
+
+- **X:** [@_devTimmy](https://x.com/_devTimmy)
+- **LinkedIn:** [devtimmy](https://www.linkedin.com/in/devtimmy)
+
+## About this project
+
+This portfolio is built with Next.js, React, TypeScript, Tailwind CSS, and responsive custom styling. It is designed to present my work clearly while staying fast, accessible, and easy to maintain.
+
+## Run locally
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Available scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run dev      # Start the development server
+npm run build    # Create a production build
+npm run start    # Start the production server
+npm run lint     # Run ESLint
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

@@ -679,6 +679,7 @@ select.input {
 .cursor-blink {
   background: var(--accent-primary);
   vertical-align: middle;
+  will-change: opacity;
   width: 2px;
   height: 1em;
   animation: 1.6s step-end infinite blink;

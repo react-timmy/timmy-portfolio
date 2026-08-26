@@ -681,7 +681,7 @@ select.input {
   vertical-align: middle;
   width: 2px;
   height: 1em;
-  animation: 1s step-end infinite blink;
+  animation: 1.6s step-end infinite blink;
   display: inline-block;
 }
 

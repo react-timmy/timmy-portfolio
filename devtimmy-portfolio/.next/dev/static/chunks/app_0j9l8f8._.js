@@ -2380,7 +2380,7 @@ function Hero() {
                                     borderRadius: "50%",
                                     background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
                                     opacity: 0.45,
-                                    animation: "heroSpin 20s linear infinite"
+                                    animation: "heroSpin 30s linear infinite"
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Hero.tsx",

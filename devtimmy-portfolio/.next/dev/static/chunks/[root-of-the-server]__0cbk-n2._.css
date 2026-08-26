@@ -756,16 +756,6 @@ select.input {
   }
 }
 
-@keyframes blink {
-  0%, 100% {
-    opacity: 1;
-  }
-
-  50% {
-    opacity: 0;
-  }
-}
-
 @keyframes pulseDot {
   0%, 80%, 100% {
     opacity: .35;
@@ -812,16 +802,6 @@ select.input {
 
 .d-5 {
   animation-delay: .4s;
-}
-
-.cursor-blink {
-  background: var(--accent-primary);
-  vertical-align: middle;
-  will-change: opacity;
-  width: 2px;
-  height: 1em;
-  animation: 1.6s step-end infinite blink;
-  display: inline-block;
 }
 
 .dot-pulse {

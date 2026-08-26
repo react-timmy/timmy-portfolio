@@ -25,63 +25,19 @@ const QUICK_STATS = [
   { value: "24h", label: "Response", color: "#a78bfa" },
 ];
 
-const TYPE_SPEED   = 65;
-const DELETE_SPEED = 35;  
-const PAUSE_AFTER  = 1800;
-const PAUSE_BEFORE = 300; 
-
 export default function Hero() {
-  const [displayed, setDisplayed] = useState("");
   const [roleIdx, setRoleIdx]     = useState(0);
   const [proofIdx, setProofIdx]   = useState(0);
   const [proofVis, setProofVis]   = useState(true);
   const [avatarOpacity, setAvatarOpacity] = useState(1);
   const avatarRef = useRef<HTMLDivElement>(null);
-  const phaseRef  = useRef<"typing" | "pausing" | "deleting" | "waiting">("typing");
-  const idxRef    = useRef(0);   // char index
-  const roleRef   = useRef(0);   // role index
 
-  /* Typewriter effect */
+  /* Change roles with a slow drawer reveal instead of typing each character. */
   useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-
-    const tick = () => {
-      const role  = ROLES[roleRef.current];
-      const phase = phaseRef.current;
-
-      if (phase === "typing") {
-        idxRef.current += 1;
-        setDisplayed(role.slice(0, idxRef.current));
-        if (idxRef.current >= role.length) {
-          phaseRef.current = "pausing";
-          timer = setTimeout(tick, PAUSE_AFTER);
-        } else {
-          timer = setTimeout(tick, TYPE_SPEED);
-        }
-      } else if (phase === "pausing") {
-        phaseRef.current = "deleting";
-        timer = setTimeout(tick, DELETE_SPEED);
-      } else if (phase === "deleting") {
-        idxRef.current -= 1;
-        setDisplayed(role.slice(0, idxRef.current));
-        if (idxRef.current <= 0) {
-          roleRef.current = (roleRef.current + 1) % ROLES.length;
-          setRoleIdx(roleRef.current);
-          phaseRef.current = "waiting";
-          timer = setTimeout(tick, PAUSE_BEFORE);
-        } else {
-          timer = setTimeout(tick, DELETE_SPEED);
-        }
-      } else {
-        // waiting
-        idxRef.current = 0;
-        phaseRef.current = "typing";
-        timer = setTimeout(tick, TYPE_SPEED);
-      }
-    };
-
-    timer = setTimeout(tick, TYPE_SPEED);
-    return () => clearTimeout(timer);
+    const timer = setInterval(() => {
+      setRoleIdx(index => (index + 1) % ROLES.length);
+    }, 5200);
+    return () => clearInterval(timer);
   }, []);
 
   /* Rotate proof */
@@ -186,15 +142,14 @@ export default function Hero() {
             transition: "none", /* driven by scroll, not CSS transition */
           }}
         >
-          {/* Spinning conic ring */}
+          {/* Breathing signal ring */}
           <div style={{
             position: "absolute", inset: -4,
             borderRadius: "50%",
             background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
             opacity: 0.45,
-            transform: "rotate(0deg)",
             willChange: "transform",
-            animation: "heroSpin 30s linear infinite",
+            animation: "ringBreathe 3.6s ease-in-out infinite",
           }} />
           {/* Photo */}
           <div style={{
@@ -220,12 +175,14 @@ export default function Hero() {
             border: "2.5px solid #000",
           }}>
             <div style={{
+              position: "relative",
               width: 12, height: 12,
               borderRadius: "50%",
               background: "#4ade80",
               boxShadow: "0 0 10px #4ade80bb",
-              animation: "pulse 1.4s ease-in-out infinite",
-            }} />
+            }}>
+              <span className="status-ripple" aria-hidden />
+            </div>
           </div>
         </div>
 
@@ -282,10 +239,10 @@ export default function Hero() {
             fontWeight: 900, letterSpacing: "-0.025em",
             color: "#8b5cf6",
             display: "inline-block",
-          }}>
-            {displayed}
+            animation: "roleDrawer 1200ms cubic-bezier(0.16, 1, 0.3, 1) both",
+          }} key={roleIdx}>
+            {ROLES[roleIdx]}
           </span>
-          <span className="cursor-blink" style={{ marginLeft: 2 }} />
         </div>
 
 
@@ -365,9 +322,23 @@ export default function Hero() {
       </a>
 
       <style>{`
-        @keyframes heroSpin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
+        @keyframes ringBreathe {
+          0%, 100% { opacity: 0.24; transform: scale(0.96); filter: blur(0px); }
+          50%       { opacity: 0.58; transform: scale(1.04); filter: blur(0.4px); }
+        }
+        @keyframes roleDrawer {
+          from {
+            opacity: 0;
+            transform: translateY(-14px) scaleY(0.82);
+            transform-origin: top center;
+            clip-path: inset(0 0 100% 0);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scaleY(1);
+            transform-origin: top center;
+            clip-path: inset(0 0 0 0);
+          }
         }
         @keyframes heartbeat {
           0%, 100% { transform: scale(1);    opacity: 1;    }
@@ -376,10 +347,18 @@ export default function Hero() {
           42%       { transform: scale(1.2);  opacity: 0.85; }
           70%       { transform: scale(1);    opacity: 1;    }
         }
-        @keyframes pulse {
-          0%   { transform: scale(0.85); opacity: 0.5; }
-          50%  { transform: scale(1.12); opacity: 1;   }
-          100% { transform: scale(0.85); opacity: 0.5; }
+        .status-ripple {
+          position: absolute;
+          inset: -2px;
+          border: 1px solid #4ade80;
+          border-radius: 50%;
+          pointer-events: none;
+          animation: statusRipple 2.4s ease-out infinite;
+        }
+        @keyframes statusRipple {
+          0%   { transform: scale(1); opacity: 0.7; }
+          70%  { transform: scale(2.4); opacity: 0; }
+          100% { transform: scale(2.4); opacity: 0; }
         }
         @keyframes scrollFloat {
           0%, 100% { transform: translateX(-50%) translateY(0px); }

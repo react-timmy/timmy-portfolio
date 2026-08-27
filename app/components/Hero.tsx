@@ -26,19 +26,26 @@ const QUICK_STATS = [
 ];
 
 export default function Hero() {
+  const [isMounted, setIsMounted] = useState(false);
   const [roleIdx, setRoleIdx]     = useState(0);
   const [proofIdx, setProofIdx]   = useState(0);
   const [proofVis, setProofVis]   = useState(true);
   const [avatarOpacity, setAvatarOpacity] = useState(1);
   const avatarRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setIsMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   /* Change roles with a slow drawer reveal instead of typing each character. */
   useEffect(() => {
+    if (!isMounted) return;
     const timer = setInterval(() => {
       setRoleIdx(index => (index + 1) % ROLES.length);
     }, 5200);
     return () => clearInterval(timer);
-  }, []);
+  }, [isMounted]);
 
   /* Rotate proof */
   useEffect(() => {
@@ -148,8 +155,8 @@ export default function Hero() {
             borderRadius: "50%",
             background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
             opacity: 0.45,
-            willChange: "transform",
-            animation: "ringBreathe 3.6s ease-in-out infinite",
+            willChange: isMounted ? "transform, opacity" : "auto",
+            animation: isMounted ? "ringBreathe 3.6s ease-in-out infinite" : "none",
           }} />
           {/* Photo */}
           <div style={{
@@ -181,7 +188,11 @@ export default function Hero() {
               background: "#4ade80",
               boxShadow: "0 0 10px #4ade80bb",
             }}>
-              <span className="status-ripple" aria-hidden />
+              <span
+                className="status-ripple"
+                aria-hidden
+                style={{ animationPlayState: isMounted ? "running" : "paused" }}
+              />
             </div>
           </div>
         </div>
@@ -220,10 +231,10 @@ export default function Hero() {
           I&apos;m Cole Timmy
         </h1>
 
-        {/* ── Animated role (typewriter) ────────────────────────────────── */}
+        {/* ── Animated role ─────────────────────────────────────────────── */}
         <div className="anim-fade-up d-2" style={{
           display: "flex", alignItems: "center", justifyContent: "center", gap: 0,
-          marginBottom: 24, height: 36,
+          marginBottom: 24, height: 36, minWidth: "20ch",
         }}>
           {/* static "a " prefix */}
           <span style={{
@@ -239,7 +250,8 @@ export default function Hero() {
             fontWeight: 900, letterSpacing: "-0.025em",
             color: "#8b5cf6",
             display: "inline-block",
-            animation: "roleDrawer 1200ms cubic-bezier(0.16, 1, 0.3, 1) both",
+            minWidth: "20ch",
+            animation: isMounted ? "roleDrawer 1400ms cubic-bezier(0.16, 1, 0.3, 1) both" : "none",
           }} key={roleIdx}>
             {ROLES[roleIdx]}
           </span>
@@ -323,21 +335,19 @@ export default function Hero() {
 
       <style>{`
         @keyframes ringBreathe {
-          0%, 100% { opacity: 0.24; transform: scale(0.96); filter: blur(0px); }
-          50%       { opacity: 0.58; transform: scale(1.04); filter: blur(0.4px); }
+          0%, 100% { opacity: 0.24; transform: translate3d(0, 0, 0) scale(0.96); }
+          50%       { opacity: 0.58; transform: translate3d(0, 0, 0) scale(1.04); }
         }
         @keyframes roleDrawer {
           from {
             opacity: 0;
-            transform: translateY(-14px) scaleY(0.82);
+            transform: translate3d(0, -14px, 0) scaleY(0.82);
             transform-origin: top center;
-            clip-path: inset(0 0 100% 0);
           }
           to {
             opacity: 1;
-            transform: translateY(0) scaleY(1);
+            transform: translate3d(0, 0, 0) scaleY(1);
             transform-origin: top center;
-            clip-path: inset(0 0 0 0);
           }
         }
         @keyframes heartbeat {

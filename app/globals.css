@@ -228,8 +228,9 @@ img { display: block; max-width: 100%; }
   font-weight: 700;
   color: var(--text-description);
   background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* Temporarily disable GPU-backed blur to check for dev-time flicker */
+  /* backdrop-filter: blur(12px); */
+  /* -webkit-backdrop-filter: blur(12px); */
   border: 1px solid var(--border-mid);
   cursor: pointer;
   letter-spacing: -0.01em;

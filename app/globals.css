@@ -393,10 +393,18 @@ select.input { cursor: pointer; appearance: none; }
   40%            { transform: scale(1);   opacity: 1; }
 }
 
-.anim-fade-up  { animation: fadeUp  var(--dur-reveal) var(--ease-spring) both; }
-.anim-fade-in  { animation: fadeIn  var(--dur-reveal) ease both; }
-.anim-slide-in { animation: slideInRight var(--dur-reveal) var(--ease-spring) both; }
-.anim-glow     { animation: redGlow 3s ease-in-out infinite; }
+.perf-anim {
+  /* Promote element to compositor for smoother transform/opacity animations */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.anim-fade-up  { animation: fadeUp  var(--dur-reveal) var(--ease-spring) both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-fade-in  { animation: fadeIn  var(--dur-reveal) ease both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-slide-in { animation: slideInRight var(--dur-reveal) var(--ease-spring) both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-glow     { animation: redGlow 3s ease-in-out infinite; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 
 .d-1 { animation-delay: 80ms;  }
 .d-2 { animation-delay: 160ms; }

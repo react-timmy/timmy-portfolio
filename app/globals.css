@@ -247,6 +247,24 @@ img { display: block; max-width: 100%; }
   transform: translateY(-1px);
 }
 
+/* Mobile browsers frequently repaint backdrop filters during scroll/animation. */
+.site-header,
+.site-mobile-drawer {
+  isolation: isolate;
+}
+
+@media (max-width: 767px) {
+  .site-header,
+  .site-mobile-drawer {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .anim-glow {
+    animation: none !important;
+  }
+}
+
 /* ─── Pill badge — type pills from LibraryView ───────────────────────────── */
 .badge {
   display: inline-flex;

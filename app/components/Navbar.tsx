@@ -34,6 +34,7 @@ interface FlyState {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active,   setActive]   = useState("hero");
+  const [year,     setYear]     = useState<number | null>(null);
 
   /* Raw scroll-based 0-1 values */
   const [pA, setPA] = useState(0); // phase A (text shrink)
@@ -107,6 +108,10 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
   const close = () => setMenuOpen(false);
 
   /* Avatar has fully landed in navbar slot */
@@ -162,7 +167,7 @@ export default function Navbar() {
       )}
 
       {/* ── Header ────────────────────────────────────────────────────────── */}
-      <header style={{
+      <header className="site-header" style={{
         position: "fixed", inset: "0 0 auto", zIndex: 50,
         background:           scrolled ? "rgba(0,0,0,0.90)"                 : "transparent",
         backdropFilter:       scrolled ? "blur(24px)"                       : "none",
@@ -359,7 +364,7 @@ export default function Navbar() {
       </header>
 
       {/* ── Mobile drawer ─────────────────────────────────────────────────── */}
-      <div className="md:hidden" style={{
+      <div className="site-mobile-drawer md:hidden" style={{
         position: "fixed", inset: 0, zIndex: 40,
         background: "rgba(0,0,0,0.98)",
         backdropFilter: "blur(28px)", WebkitBackdropFilter: "blur(28px)",
@@ -410,7 +415,7 @@ export default function Navbar() {
         <div style={{ padding: "20px 24px 48px" }}>
           <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 16 }} />
           <p style={{ fontSize: 11, color: "#27272a", fontWeight: 700 }}>
-            © {new Date().getFullYear()} Timmy · @_devTimmy
+            © {year ?? ""} Timmy · @_devTimmy
           </p>
         </div>
       </div>

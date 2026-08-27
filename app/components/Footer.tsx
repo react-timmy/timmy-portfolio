@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 const NAV_COLS = [
   {
     heading: "Site",
@@ -42,6 +44,9 @@ const SOCIAL = [
 ];
 
 export default function Footer() {
+  const [year, setYear] = useState<number | null>(null);
+  useEffect(() => { setYear(new Date().getFullYear()); }, []);
+
   return (
     <footer style={{ background: "#000000", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "56px 20px 32px" }}>
@@ -137,7 +142,7 @@ export default function Footer() {
           alignItems: "center", justifyContent: "space-between", gap: 8,
         }}>
           <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1c1e" }}>
-            © {new Date().getFullYear()} Timmy · All rights reserved.
+            © {year ?? ''} Timmy · All rights reserved.
           </p>
           <p style={{ fontSize: 12, fontWeight: 700, color: "#1c1c1e" }}>
             Built with Next.js · Deployed on Vercel

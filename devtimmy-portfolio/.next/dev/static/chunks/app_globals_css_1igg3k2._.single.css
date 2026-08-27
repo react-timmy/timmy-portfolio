@@ -266,9 +266,9 @@ html, body {
 body {
   background: var(--bg-root);
   color: var(--text-primary);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   overflow-x: hidden;
@@ -312,7 +312,7 @@ a:hover {
 }
 
 code, kbd, pre {
-  font-family: JetBrains Mono, ui-monospace, monospace;
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: .8125rem;
 }
 
@@ -429,7 +429,6 @@ img {
 .btn-glass {
   border-radius: var(--radius-pill);
   color: var(--text-description);
-  -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--border-mid);
   cursor: pointer;
   letter-spacing: -.01em;
@@ -450,6 +449,20 @@ img {
   color: #fff;
   background: #ffffff21;
   transform: translateY(-1px);
+}
+
+.site-header, .site-mobile-drawer {
+  isolation: isolate;
+}
+
+@media (max-width: 767px) {
+  .site-header, .site-mobile-drawer {
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .anim-glow {
+    animation: none !important;
+  }
 }
 
 .badge {
@@ -630,20 +643,38 @@ select.input {
   }
 }
 
+.perf-anim {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
 .anim-fade-up {
   animation: fadeUp  var(--dur-reveal) var(--ease-spring) both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .anim-fade-in {
   animation: fadeIn  var(--dur-reveal) ease both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .anim-slide-in {
   animation: slideInRight var(--dur-reveal) var(--ease-spring) both;
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 .anim-glow {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
   animation: 3s ease-in-out infinite redGlow;
+  transform: translateZ(0);
 }
 
 .d-1 {

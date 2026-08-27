@@ -34,12 +34,15 @@ interface FlyState {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [active,   setActive]   = useState("hero");
-  const [year,     setYear]     = useState<number | null>(null);
+  const [year] = useState(() => new Date().getFullYear());
 
   /* Raw scroll-based 0-1 values */
   const [pA, setPA] = useState(0); // phase A (text shrink)
   const [pB, setPB] = useState(0); // phase B (avatar fly)
   const [fly, setFly] = useState<FlyState | null>(null);
+  const [mobileView, setMobileView] = useState(() =>
+    typeof window !== "undefined" ? window.matchMedia("(max-width: 767px)").matches : false
+  );
 
   const logoSlotRef  = useRef<HTMLDivElement>(null);
   const rafRef       = useRef<number | null>(null);
@@ -53,6 +56,11 @@ export default function Navbar() {
 
     setPA(newPA);
     setPB(newPB);
+
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setFly(null);
+      return;
+    }
 
     /* Flying avatar — only active during phase B */
     const anchor = document.getElementById("hero-avatar-anchor");
@@ -81,13 +89,22 @@ export default function Navbar() {
 
   useEffect(() => {
     scheduleUpdate();
+    const mq = window.matchMedia("(max-width: 767px)");
+    const onMediaChange = () => {
+      setMobileView(mq.matches);
+      if (mq.matches) setFly(null);
+      scheduleUpdate();
+    };
+
     window.addEventListener("scroll",    scheduleUpdate, { passive: true });
     window.addEventListener("touchmove", scheduleUpdate, { passive: true });
     window.addEventListener("resize",    scheduleUpdate, { passive: true });
+    mq.addEventListener("change", onMediaChange);
     return () => {
       window.removeEventListener("scroll",    scheduleUpdate);
       window.removeEventListener("touchmove", scheduleUpdate);
       window.removeEventListener("resize",    scheduleUpdate);
+      mq.removeEventListener("change", onMediaChange);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
   }, [scheduleUpdate]);
@@ -108,10 +125,6 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
-
   const close = () => setMenuOpen(false);
 
   /* Avatar has fully landed in navbar slot */
@@ -125,7 +138,7 @@ export default function Navbar() {
   return (
     <>
       {/* ── Flying avatar clone — visible during phase B, hidden when landed ── */}
-      {fly && pB > 0.01 && !landed && (
+      {fly && !mobileView && pB > 0.01 && !landed && (
         <div
           aria-hidden
           style={{
@@ -170,10 +183,10 @@ export default function Navbar() {
       <header className="site-header" style={{
         position: "fixed", inset: "0 0 auto", zIndex: 50,
         background:           scrolled ? "rgba(0,0,0,0.90)"                 : "transparent",
-        backdropFilter:       scrolled ? "blur(24px)"                       : "none",
-        WebkitBackdropFilter: scrolled ? "blur(24px)"                       : "none",
-        borderBottom:         scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
-        boxShadow:            scrolled ? "0 8px 32px rgba(0,0,0,0.6)"       : "none",
+        backdropFilter:       scrolled && !mobileView ? "blur(24px)"                       : "none",
+        WebkitBackdropFilter: scrolled && !mobileView ? "blur(24px)"                       : "none",
+        borderBottom:         scrolled ? "1px solid rgba(255,255,255,0.07)"                : "1px solid transparent",
+        boxShadow:            scrolled && !mobileView ? "0 8px 32px rgba(0,0,0,0.6)"       : "none",
         /* Smooth bg transition */
         transition: "background 200ms ease, border-color 200ms ease, box-shadow 200ms ease",
       }}>
@@ -415,7 +428,7 @@ export default function Navbar() {
         <div style={{ padding: "20px 24px 48px" }}>
           <div style={{ height: 1, background: "rgba(255,255,255,0.06)", marginBottom: 16 }} />
           <p style={{ fontSize: 11, color: "#27272a", fontWeight: 700 }}>
-            © {year ?? ""} Timmy · @_devTimmy
+            © {year} Timmy · @_devTimmy
           </p>
         </div>
       </div>

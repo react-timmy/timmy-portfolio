@@ -30,8 +30,8 @@ export default function Hero() {
   const [roleIdx, setRoleIdx]     = useState(0);
   const [proofIdx, setProofIdx]   = useState(0);
   const [proofVis, setProofVis]   = useState(true);
-  const [avatarOpacity, setAvatarOpacity] = useState(1);
   const avatarRef = useRef<HTMLDivElement>(null);
+  const avatarVisualRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const frame = requestAnimationFrame(() => setIsMounted(true));
@@ -73,15 +73,31 @@ export default function Hero() {
     return () => window.removeEventListener("resize", publish);
   }, []);
 
-  /* Fade avatar out as user scrolls — starts fading after 40px, gone by 160px */
+  /* Fade avatar out as user scrolls — starts fading after 40px, gone by 160px. */
   useEffect(() => {
-    const onScroll = () => {
+    let raf: number | null = null;
+
+    const applyAvatarScroll = () => {
+      raf = null;
+      const el = avatarVisualRef.current;
+      if (!el) return;
+
       const y = window.scrollY;
       const opacity = Math.max(0, 1 - (y - 40) / 120);
-      setAvatarOpacity(opacity);
+      el.style.opacity = String(opacity);
+      el.style.transform = `translate3d(0, 0, 0) scale(${0.85 + 0.15 * opacity})`;
     };
+
+    const onScroll = () => {
+      if (raf === null) raf = requestAnimationFrame(applyAvatarScroll);
+    };
+
+    applyAvatarScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf !== null) cancelAnimationFrame(raf);
+    };
   }, []);
 
   const proof = PROOF[proofIdx];
@@ -144,55 +160,62 @@ export default function Hero() {
           style={{
             position: "relative",
             marginBottom: 24,
-            opacity: avatarOpacity,
-            transform: `scale(${0.85 + 0.15 * avatarOpacity})`,
-            transition: "none", /* driven by scroll, not CSS transition */
           }}
         >
-          {/* Breathing signal ring */}
-          <div style={{
-            position: "absolute", inset: -4,
-            borderRadius: "50%",
-            background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
-            opacity: 0.45,
-            willChange: isMounted ? "transform, opacity" : "auto",
-            animation: isMounted ? "ringBreathe 3.6s ease-in-out infinite" : "none",
-          }} />
-          {/* Photo */}
-          <div style={{
-            position: "relative",
-            width: 100, height: 100,
-            borderRadius: "50%",
-            overflow: "hidden",
-            border: "2px solid rgba(255,255,255,0.1)",
-          }}>
-            <img
-              src={AVATAR}
-              alt="Cole Timmy"
-              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
-            />
-          </div>
-          {/* Heartbeat green dot */}
-          <div style={{
-            position: "absolute", bottom: 3, right: 3,
-            width: 22, height: 22,
-            borderRadius: "50%",
-            background: "#000",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            border: "2.5px solid #000",
-          }}>
+          <div
+            ref={avatarVisualRef}
+            className="hero-avatar-visual"
+            style={{
+              position: "relative",
+              transform: "translate3d(0, 0, 0) scale(1)",
+              transformOrigin: "center",
+            }}
+          >
+            {/* Breathing signal ring */}
+            <div className="hero-avatar-ring" style={{
+              position: "absolute", inset: -4,
+              borderRadius: "50%",
+              background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
+              opacity: 0.45,
+              willChange: isMounted ? "transform, opacity" : "auto",
+              animation: isMounted ? "ringBreathe 3.6s ease-in-out infinite" : "none",
+            }} />
+            {/* Photo */}
             <div style={{
               position: "relative",
-              width: 12, height: 12,
+              width: 100, height: 100,
               borderRadius: "50%",
-              background: "#4ade80",
-              boxShadow: "0 0 10px #4ade80bb",
+              overflow: "hidden",
+              border: "2px solid rgba(255,255,255,0.1)",
             }}>
-              <span
-                className="status-ripple"
-                aria-hidden
-                style={{ animationPlayState: isMounted ? "running" : "paused" }}
+              <img
+                src={AVATAR}
+                alt="Cole Timmy"
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center" }}
               />
+            </div>
+            {/* Heartbeat green dot */}
+            <div style={{
+              position: "absolute", bottom: 3, right: 3,
+              width: 22, height: 22,
+              borderRadius: "50%",
+              background: "#000",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              border: "2.5px solid #000",
+            }}>
+              <div style={{
+                position: "relative",
+                width: 12, height: 12,
+                borderRadius: "50%",
+                background: "#4ade80",
+                boxShadow: "0 0 10px #4ade80bb",
+              }}>
+                <span
+                  className="status-ripple"
+                  aria-hidden
+                  style={{ animationPlayState: isMounted ? "running" : "paused" }}
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -252,7 +275,7 @@ export default function Hero() {
             display: "inline-block",
             minWidth: "20ch",
             animation: isMounted ? "roleDrawer 1400ms cubic-bezier(0.16, 1, 0.3, 1) both" : "none",
-          }} key={roleIdx}>
+          }} className="hero-role-text" key={roleIdx}>
             {ROLES[roleIdx]}
           </span>
         </div>
@@ -319,6 +342,7 @@ export default function Hero() {
       <a
         href="#projects"
         aria-label="Scroll to projects"
+        className="hero-scroll-cue"
         style={{
           position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 7,
@@ -365,6 +389,20 @@ export default function Hero() {
           pointer-events: none;
           animation: statusRipple 2.4s ease-out infinite;
         }
+        .hero-avatar-visual,
+        .hero-avatar-ring,
+        .hero-role-text,
+        .hero-scroll-cue,
+        .status-ripple {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+        }
+        .hero-avatar-visual,
+        .hero-role-text,
+        .hero-scroll-cue {
+          will-change: transform, opacity;
+        }
         @keyframes statusRipple {
           0%   { transform: scale(1); opacity: 0.7; }
           70%  { transform: scale(2.4); opacity: 0; }
@@ -376,6 +414,26 @@ export default function Hero() {
         }
         @media (max-width: 767px) {
           #hero > div { padding-top: 100px !important; padding-bottom: 80px !important; }
+          .hero-avatar-ring {
+            animation: none !important;
+            opacity: 0.32 !important;
+          }
+          .status-ripple {
+            animation: none !important;
+            opacity: 0 !important;
+          }
+          .hero-role-text {
+            animation-name: roleDrawerMobile !important;
+            transform-origin: center !important;
+          }
+          .hero-scroll-cue {
+            animation: none !important;
+            transform: translateX(-50%) translate3d(0, 0, 0) !important;
+          }
+        }
+        @keyframes roleDrawerMobile {
+          from { opacity: 0; transform: translate3d(0, 4px, 0); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
       `}</style>
     </section>

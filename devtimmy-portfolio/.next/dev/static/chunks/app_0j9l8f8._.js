@@ -2166,8 +2166,8 @@ function Hero() {
     const [roleIdx, setRoleIdx] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const [proofIdx, setProofIdx] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
     const [proofVis, setProofVis] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
-    const [avatarOpacity, setAvatarOpacity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(1);
     const avatarRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const avatarVisualRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Hero.useEffect": ()=>{
             const frame = requestAnimationFrame({
@@ -2236,20 +2236,34 @@ function Hero() {
             })["Hero.useEffect"];
         }
     }["Hero.useEffect"], []);
-    /* Fade avatar out as user scrolls — starts fading after 40px, gone by 160px */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+    /* Fade avatar out as user scrolls — starts fading after 40px, gone by 160px. */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Hero.useEffect": ()=>{
-            const onScroll = {
-                "Hero.useEffect.onScroll": ()=>{
+            let raf = null;
+            const applyAvatarScroll = {
+                "Hero.useEffect.applyAvatarScroll": ()=>{
+                    raf = null;
+                    const el = avatarVisualRef.current;
+                    if (!el) return;
                     const y = window.scrollY;
                     const opacity = Math.max(0, 1 - (y - 40) / 120);
-                    setAvatarOpacity(opacity);
+                    el.style.opacity = String(opacity);
+                    el.style.transform = `translate3d(0, 0, 0) scale(${0.85 + 0.15 * opacity})`;
+                }
+            }["Hero.useEffect.applyAvatarScroll"];
+            const onScroll = {
+                "Hero.useEffect.onScroll": ()=>{
+                    if (raf === null) raf = requestAnimationFrame(applyAvatarScroll);
                 }
             }["Hero.useEffect.onScroll"];
+            applyAvatarScroll();
             window.addEventListener("scroll", onScroll, {
                 passive: true
             });
             return ({
-                "Hero.useEffect": ()=>window.removeEventListener("scroll", onScroll)
+                "Hero.useEffect": ()=>{
+                    window.removeEventListener("scroll", onScroll);
+                    if (raf !== null) cancelAnimationFrame(raf);
+                }
             })["Hero.useEffect"];
         }
     }["Hero.useEffect"], []);
@@ -2276,7 +2290,7 @@ function Hero() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 104,
+                lineNumber: 120,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2291,7 +2305,7 @@ function Hero() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 108,
+                lineNumber: 124,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2303,7 +2317,7 @@ function Hero() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 112,
+                lineNumber: 128,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2320,7 +2334,7 @@ function Hero() {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 116,
+                lineNumber: 132,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2343,83 +2357,50 @@ function Hero() {
                         className: "anim-fade-up d-1",
                         style: {
                             position: "relative",
-                            marginBottom: 24,
-                            opacity: avatarOpacity,
-                            transform: `scale(${0.85 + 0.15 * avatarOpacity})`,
-                            transition: "none"
+                            marginBottom: 24
                         },
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                style: {
-                                    position: "absolute",
-                                    inset: -4,
-                                    borderRadius: "50%",
-                                    background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
-                                    opacity: 0.45,
-                                    willChange: isMounted ? "transform, opacity" : "auto",
-                                    animation: isMounted ? "ringBreathe 3.6s ease-in-out infinite" : "none"
-                                }
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 153,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                style: {
-                                    position: "relative",
-                                    width: 100,
-                                    height: 100,
-                                    borderRadius: "50%",
-                                    overflow: "hidden",
-                                    border: "2px solid rgba(255,255,255,0.1)"
-                                },
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: AVATAR,
-                                    alt: "Cole Timmy",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            ref: avatarVisualRef,
+                            className: "hero-avatar-visual",
+                            style: {
+                                position: "relative",
+                                transform: "translate3d(0, 0, 0) scale(1)",
+                                transformOrigin: "center"
+                            },
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "hero-avatar-ring",
                                     style: {
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        objectPosition: "top center"
+                                        position: "absolute",
+                                        inset: -4,
+                                        borderRadius: "50%",
+                                        background: "conic-gradient(from 0deg, #8b5cf6 0%, #8b5cf600 40%, #8b5cf600 60%, #8b5cf6 100%)",
+                                        opacity: 0.45,
+                                        willChange: isMounted ? "transform, opacity" : "auto",
+                                        animation: isMounted ? "ringBreathe 3.6s ease-in-out infinite" : "none"
                                     }
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Hero.tsx",
-                                    lineNumber: 169,
+                                    lineNumber: 175,
                                     columnNumber: 13
-                                }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 162,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                style: {
-                                    position: "absolute",
-                                    bottom: 3,
-                                    right: 3,
-                                    width: 22,
-                                    height: 22,
-                                    borderRadius: "50%",
-                                    background: "#000",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    border: "2.5px solid #000"
-                                },
-                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                     style: {
                                         position: "relative",
-                                        width: 12,
-                                        height: 12,
+                                        width: 100,
+                                        height: 100,
                                         borderRadius: "50%",
-                                        background: "#4ade80",
-                                        boxShadow: "0 0 10px #4ade80bb"
+                                        overflow: "hidden",
+                                        border: "2px solid rgba(255,255,255,0.1)"
                                     },
-                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "status-ripple",
-                                        "aria-hidden": true,
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                        src: AVATAR,
+                                        alt: "Cole Timmy",
                                         style: {
-                                            animationPlayState: isMounted ? "running" : "paused"
+                                            width: "100%",
+                                            height: "100%",
+                                            objectFit: "cover",
+                                            objectPosition: "top center"
                                         }
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
@@ -2430,16 +2411,60 @@ function Hero() {
                                     fileName: "[project]/app/components/Hero.tsx",
                                     lineNumber: 184,
                                     columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    style: {
+                                        position: "absolute",
+                                        bottom: 3,
+                                        right: 3,
+                                        width: 22,
+                                        height: 22,
+                                        borderRadius: "50%",
+                                        background: "#000",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        border: "2.5px solid #000"
+                                    },
+                                    children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        style: {
+                                            position: "relative",
+                                            width: 12,
+                                            height: 12,
+                                            borderRadius: "50%",
+                                            background: "#4ade80",
+                                            boxShadow: "0 0 10px #4ade80bb"
+                                        },
+                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "status-ripple",
+                                            "aria-hidden": true,
+                                            style: {
+                                                animationPlayState: isMounted ? "running" : "paused"
+                                            }
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/components/Hero.tsx",
+                                            lineNumber: 213,
+                                            columnNumber: 17
+                                        }, this)
+                                    }, void 0, false, {
+                                        fileName: "[project]/app/components/Hero.tsx",
+                                        lineNumber: 206,
+                                        columnNumber: 15
+                                    }, this)
+                                }, void 0, false, {
+                                    fileName: "[project]/app/components/Hero.tsx",
+                                    lineNumber: 198,
+                                    columnNumber: 13
                                 }, this)
-                            }, void 0, false, {
-                                fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 176,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/app/components/Hero.tsx",
+                            lineNumber: 165,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 140,
+                        lineNumber: 156,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2483,24 +2508,24 @@ function Hero() {
                                         d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 219,
+                                        lineNumber: 242,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/components/Hero.tsx",
-                                    lineNumber: 218,
+                                    lineNumber: 241,
                                     columnNumber: 13
                                 }, this),
                                 "@_devTimmy"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/components/Hero.tsx",
-                            lineNumber: 205,
+                            lineNumber: 228,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 201,
+                        lineNumber: 224,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
@@ -2514,7 +2539,7 @@ function Hero() {
                         children: "I'm Cole Timmy"
                     }, void 0, false, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 226,
+                        lineNumber: 249,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2540,7 +2565,7 @@ function Hero() {
                                 children: "a"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 240,
+                                lineNumber: 263,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2553,16 +2578,17 @@ function Hero() {
                                     minWidth: "20ch",
                                     animation: isMounted ? "roleDrawer 1400ms cubic-bezier(0.16, 1, 0.3, 1) both" : "none"
                                 },
+                                className: "hero-role-text",
                                 children: ROLES[roleIdx]
                             }, roleIdx, false, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 248,
+                                lineNumber: 271,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 235,
+                        lineNumber: 258,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2588,19 +2614,19 @@ function Hero() {
                                             d: "M5 3l14 9-14 9V3z"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Hero.tsx",
-                                            lineNumber: 267,
+                                            lineNumber: 290,
                                             columnNumber: 81
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 267,
+                                        lineNumber: 290,
                                         columnNumber: 13
                                     }, this),
                                     "See my work"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 266,
+                                lineNumber: 289,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
@@ -2618,25 +2644,25 @@ function Hero() {
                                             d: "M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
                                         }, void 0, false, {
                                             fileName: "[project]/app/components/Hero.tsx",
-                                            lineNumber: 271,
+                                            lineNumber: 294,
                                             columnNumber: 113
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 271,
+                                        lineNumber: 294,
                                         columnNumber: 13
                                     }, this),
                                     "Let's build something"
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 270,
+                                lineNumber: 293,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 262,
+                        lineNumber: 285,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2673,7 +2699,7 @@ function Hero() {
                                         children: value
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 291,
+                                        lineNumber: 314,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2688,18 +2714,18 @@ function Hero() {
                                         children: label
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 292,
+                                        lineNumber: 315,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, label, true, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 285,
+                                lineNumber: 308,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 277,
+                        lineNumber: 300,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2723,7 +2749,7 @@ function Hero() {
                                 children: "Recent"
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 302,
+                                lineNumber: 325,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2734,7 +2760,7 @@ function Hero() {
                                 }
                             }, void 0, false, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 305,
+                                lineNumber: 328,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2755,7 +2781,7 @@ function Hero() {
                                         children: proof.icon
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 312,
+                                        lineNumber: 335,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2767,30 +2793,31 @@ function Hero() {
                                         children: proof.text
                                     }, void 0, false, {
                                         fileName: "[project]/app/components/Hero.tsx",
-                                        lineNumber: 313,
+                                        lineNumber: 336,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/components/Hero.tsx",
-                                lineNumber: 306,
+                                lineNumber: 329,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 298,
+                        lineNumber: 321,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 127,
+                lineNumber: 143,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                 href: "#projects",
                 "aria-label": "Scroll to projects",
+                className: "hero-scroll-cue",
                 style: {
                     position: "absolute",
                     bottom: 36,
@@ -2826,13 +2853,13 @@ function Hero() {
                         }
                     }, void 0, false, {
                         fileName: "[project]/app/components/Hero.tsx",
-                        lineNumber: 333,
+                        lineNumber: 357,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 319,
+                lineNumber: 342,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("style", {
@@ -2868,6 +2895,20 @@ function Hero() {
           pointer-events: none;
           animation: statusRipple 2.4s ease-out infinite;
         }
+        .hero-avatar-visual,
+        .hero-avatar-ring,
+        .hero-role-text,
+        .hero-scroll-cue,
+        .status-ripple {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform-style: preserve-3d;
+        }
+        .hero-avatar-visual,
+        .hero-role-text,
+        .hero-scroll-cue {
+          will-change: transform, opacity;
+        }
         @keyframes statusRipple {
           0%   { transform: scale(1); opacity: 0.7; }
           70%  { transform: scale(2.4); opacity: 0; }
@@ -2879,21 +2920,41 @@ function Hero() {
         }
         @media (max-width: 767px) {
           #hero > div { padding-top: 100px !important; padding-bottom: 80px !important; }
+          .hero-avatar-ring {
+            animation: none !important;
+            opacity: 0.32 !important;
+          }
+          .status-ripple {
+            animation: none !important;
+            opacity: 0 !important;
+          }
+          .hero-role-text {
+            animation-name: roleDrawerMobile !important;
+            transform-origin: center !important;
+          }
+          .hero-scroll-cue {
+            animation: none !important;
+            transform: translateX(-50%) translate3d(0, 0, 0) !important;
+          }
+        }
+        @keyframes roleDrawerMobile {
+          from { opacity: 0; transform: translate3d(0, 4px, 0); }
+          to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
       `
             }, void 0, false, {
                 fileName: "[project]/app/components/Hero.tsx",
-                lineNumber: 336,
+                lineNumber: 360,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/components/Hero.tsx",
-        lineNumber: 90,
+        lineNumber: 106,
         columnNumber: 5
     }, this);
 }
-_s(Hero, "giY3zElHuxyLKDFNe5JoM1nPN/I=");
+_s(Hero, "M5vq4UV7SOF19acrIOPP7ccJYFI=");
 _c = Hero;
 var _c;
 __turbopack_context__.k.register(_c, "Hero");

@@ -1,4 +1,4 @@
-/* [next]/internal/font/google/geist_a71539c9.module.css [app-client] (css) */
+/* [next]/internal/font/google/geist_deef94d5.module.css [app-client] (css) */
 @font-face {
   font-family: Geist;
   font-style: normal;
@@ -53,16 +53,16 @@
   size-adjust: 104.76%;
 }
 
-.geist_a71539c9-module__T19VSG__className {
+.geist_deef94d5-module__Sms4YG__className {
   font-family: Geist, Geist Fallback;
   font-style: normal;
 }
 
-.geist_a71539c9-module__T19VSG__variable {
+.geist_deef94d5-module__Sms4YG__variable {
   --font-geist-sans: "Geist", "Geist Fallback";
 }
 
-/* [next]/internal/font/google/geist_mono_8d43a2aa.module.css [app-client] (css) */
+/* [next]/internal/font/google/geist_mono_1bf8cbf6.module.css [app-client] (css) */
 @font-face {
   font-family: Geist Mono;
   font-style: normal;
@@ -126,12 +126,12 @@
   size-adjust: 134.59%;
 }
 
-.geist_mono_8d43a2aa-module__8Li5zG__className {
+.geist_mono_1bf8cbf6-module__FlyLvG__className {
   font-family: Geist Mono, Geist Mono Fallback;
   font-style: normal;
 }
 
-.geist_mono_8d43a2aa-module__8Li5zG__variable {
+.geist_mono_1bf8cbf6-module__FlyLvG__variable {
   --font-geist-mono: "Geist Mono", "Geist Mono Fallback";
 }
 
@@ -586,6 +586,20 @@ img {
   color: #fff;
   background: #ffffff21;
   transform: translateY(-1px);
+}
+
+.site-header, .site-mobile-drawer {
+  isolation: isolate;
+}
+
+@media (max-width: 767px) {
+  .site-header, .site-mobile-drawer {
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .anim-glow {
+    animation: none !important;
+  }
 }
 
 .badge {
@@ -1272,4 +1286,4 @@ select.input {
   inherits: false
 }
 
-/*# sourceMappingURL=%5Broot-of-the-server%5D__0cbk-n2._.css.map*/
+/*# sourceMappingURL=%5Broot-of-the-server%5D__1i6hinz._.css.map*/

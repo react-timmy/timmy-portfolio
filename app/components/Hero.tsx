@@ -38,7 +38,7 @@ export default function Hero() {
     return () => cancelAnimationFrame(frame);
   }, []);
 
-  /* Change roles with a slow drawer reveal instead of typing each character. */
+  /* Rotate the role text without a typing effect. */
   useEffect(() => {
     if (!isMounted) return;
     const timer = setInterval(() => {
@@ -256,15 +256,16 @@ export default function Hero() {
 
         {/* ── Animated role ─────────────────────────────────────────────── */}
         <div className="anim-fade-up d-2" style={{
-          display: "flex", alignItems: "center", justifyContent: "center", gap: 0,
-          marginBottom: 24, height: 36, minWidth: "20ch",
+          display: "inline-flex", alignItems: "baseline", justifyContent: "center", gap: "0.35em",
+          marginBottom: 24, height: 36,
+          maxWidth: "100%",
         }}>
           {/* static "a " prefix */}
           <span style={{
             fontSize: "clamp(1.0rem, 3vw, 1.375rem)",
             fontWeight: 900, letterSpacing: "-0.025em",
             color: "#ffffff",
-            marginRight: "0.35em",
+            flexShrink: 0,
           }}>
             a
           </span>
@@ -273,9 +274,8 @@ export default function Hero() {
             fontWeight: 900, letterSpacing: "-0.025em",
             color: "#8b5cf6",
             display: "inline-block",
-            minWidth: "20ch",
-            animation: isMounted ? "roleDrawer 1400ms cubic-bezier(0.16, 1, 0.3, 1) both" : "none",
-          }} className="hero-role-text" key={roleIdx}>
+            whiteSpace: "nowrap",
+          }} className="hero-role-text">
             {ROLES[roleIdx]}
           </span>
         </div>
@@ -362,18 +362,6 @@ export default function Hero() {
           0%, 100% { opacity: 0.24; transform: translate3d(0, 0, 0) scale(0.96); }
           50%       { opacity: 0.58; transform: translate3d(0, 0, 0) scale(1.04); }
         }
-        @keyframes roleDrawer {
-          from {
-            opacity: 0;
-            transform: translate3d(0, -14px, 0) scaleY(0.82);
-            transform-origin: top center;
-          }
-          to {
-            opacity: 1;
-            transform: translate3d(0, 0, 0) scaleY(1);
-            transform-origin: top center;
-          }
-        }
         @keyframes heartbeat {
           0%, 100% { transform: scale(1);    opacity: 1;    }
           14%       { transform: scale(1.35); opacity: 1;    }
@@ -422,18 +410,10 @@ export default function Hero() {
             animation: none !important;
             opacity: 0 !important;
           }
-          .hero-role-text {
-            animation-name: roleDrawerMobile !important;
-            transform-origin: center !important;
-          }
           .hero-scroll-cue {
             animation: none !important;
             transform: translateX(-50%) translate3d(0, 0, 0) !important;
           }
-        }
-        @keyframes roleDrawerMobile {
-          from { opacity: 0; transform: translate3d(0, 4px, 0); }
-          to   { opacity: 1; transform: translate3d(0, 0, 0); }
         }
       `}</style>
     </section>

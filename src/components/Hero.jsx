@@ -398,6 +398,7 @@ export default function Hero() {
         }
         .hero-avatar-visual,
         .hero-role-text,
+        .hero-role-caret,
         .hero-scroll-cue {
           will-change: transform, opacity;
         }
@@ -408,8 +409,9 @@ export default function Hero() {
           margin-left: 3px;
           border-radius: 2px;
           background: #8b5cf6;
-          transform: translateY(0.12em);
-          animation: caretBlink 900ms steps(1, end) infinite;
+          opacity: 0.95;
+          transform: translate3d(0, 0.12em, 0);
+          animation: caretPulse 1.15s ease-in-out infinite;
         }
         @keyframes statusRipple {
           0%   { transform: scale(1); opacity: 0.7; }
@@ -420,9 +422,9 @@ export default function Hero() {
           0%, 100% { opacity: 0.25; }
           50%      { opacity: 0.75; }
         }
-        @keyframes caretBlink {
-          0%, 48%  { opacity: 1; }
-          49%, 100% { opacity: 0; }
+        @keyframes caretPulse {
+          0%, 100% { opacity: 0.28; transform: translate3d(0, 0.12em, 0); }
+          50%      { opacity: 0.95; transform: translate3d(0, 0.12em, 0); }
         }
         @keyframes scrollFloat {
           0%, 100% { transform: translateX(-50%) translateY(0px); }
@@ -431,12 +433,17 @@ export default function Hero() {
         @media (max-width: 767px) {
           #hero > div { padding-top: 100px !important; padding-bottom: 80px !important; }
           .hero-avatar-ring {
-            animation: ringBreathe 4.2s ease-in-out infinite !important;
+            animation: ringBreathe 4.1s ease-in-out infinite !important;
             opacity: 0.34 !important;
           }
           .status-ripple {
             animation: statusRippleSoft 2.4s ease-in-out infinite !important;
             transform: translate3d(0, 0, 0) scale(1.35) !important;
+          }
+          .hero-role-caret {
+            animation: caretPulse 1.35s ease-in-out infinite !important;
+            transform: translate3d(0, 0.12em, 0) !important;
+            will-change: opacity;
           }
           .hero-scroll-cue {
             animation: none !important;

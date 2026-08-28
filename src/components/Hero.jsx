@@ -426,8 +426,9 @@ export default function Hero() {
           100% { transform: translate3d(0, 0, 0) scale(2.4); opacity: 0; }
         }
         @keyframes statusRippleSoft {
-          0%, 100% { transform: translate3d(0, 0, 0) scale(1.35); opacity: 0.25; }
-          50%      { transform: translate3d(0, 0, 0) scale(1.35); opacity: 0.75; }
+          0%   { transform: translate3d(0, 0, 0) scale(0.9); opacity: 0.56; }
+          68%  { transform: translate3d(0, 0, 0) scale(1.85); opacity: 0; }
+          100% { transform: translate3d(0, 0, 0) scale(1.85); opacity: 0; }
         }
         @keyframes caretPulse {
           0%, 100% { opacity: 0.28; transform: translate3d(0, 0.12em, 0); }
@@ -444,8 +445,9 @@ export default function Hero() {
             opacity: 0.34 !important;
           }
           .status-ripple {
-            animation: statusRippleSoft 2.4s ease-in-out infinite !important;
-            transform: translate3d(0, 0, 0) scale(1.35) !important;
+            animation: statusRippleSoft 2.7s ease-out infinite !important;
+            transform: translate3d(0, 0, 0) scale(0.9);
+            will-change: transform, opacity;
           }
           .hero-role-caret {
             animation: caretPulse 1.35s ease-in-out infinite !important;

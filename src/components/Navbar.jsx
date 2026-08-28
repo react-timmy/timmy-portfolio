@@ -52,12 +52,9 @@ export default function Navbar() {
     setPB(newPB);
 
     const isMobile = window.matchMedia("(max-width: 767px)").matches;
-    if (isMobile) {
-      setFly(null);
-      return;
-    }
 
-    /* Flying avatar — only active during phase B */
+    /* Keep the same avatar-travel math on all screen sizes; only hide the
+       floating clone on mobile so the motion remains consistent without flicker. */
     const anchor = document.getElementById("hero-avatar-anchor");
     const slot   = logoSlotRef.current;
     if (!anchor || !slot) return;
@@ -74,7 +71,7 @@ export default function Navbar() {
     const cy   = srcCY + (tgtCY - srcCY) * newPB;
     const size = srcRect.width + (NAV_AVATAR_SIZE - srcRect.width) * newPB;
 
-    setFly({ x: cx - size / 2, y: cy - size / 2, size, progress: newPB });
+    setFly(isMobile ? null : { x: cx - size / 2, y: cy - size / 2, size, progress: newPB });
   }, []);
 
   const scheduleUpdate = useCallback(() => {
@@ -177,11 +174,11 @@ export default function Navbar() {
       {/* ── Header ────────────────────────────────────────────────────────── */}
       <header className="site-header" style={{
         position: "fixed", inset: "0 0 auto", zIndex: 50,
-        background:           scrolled ? "rgba(0,0,0,0.90)"                 : "transparent",
-        backdropFilter:       scrolled && !mobileView ? "blur(24px)"                       : "none",
-        WebkitBackdropFilter: scrolled && !mobileView ? "blur(24px)"                       : "none",
-        borderBottom:         scrolled ? "1px solid rgba(255,255,255,0.07)"                : "1px solid transparent",
-        boxShadow:            scrolled && !mobileView ? "0 8px 32px rgba(0,0,0,0.6)"       : "none",
+        background:           scrolled ? (mobileView ? "#000000" : "rgba(0,0,0,0.90)") : "transparent",
+        backdropFilter:       scrolled && !mobileView ? "blur(24px)" : "none",
+        WebkitBackdropFilter: scrolled && !mobileView ? "blur(24px)" : "none",
+        borderBottom:         scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
+        boxShadow:            scrolled && !mobileView ? "0 8px 32px rgba(0,0,0,0.6)" : "none",
         /* Smooth bg transition */
         transition: "background 200ms ease, border-color 200ms ease, box-shadow 200ms ease",
       }}>

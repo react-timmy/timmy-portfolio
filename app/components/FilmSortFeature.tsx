@@ -5,9 +5,9 @@ import Image from "next/image";
 /* FilmSort flagship section — styled like the DetailsScreen hero */
 
 const SCREENSHOTS = [
-  { src: "/Screenshot_20260809-135424.jpg", alt: "FilmSort library view" },
-  { src: "/Screenshot_20260809-135437.jpg", alt: "FilmSort file scanner" },
-  { src: "/Screenshot_20260809-135448.jpg", alt: "FilmSort metadata detail" },
+  { src: "/Screenshot_20260809-135424.jpg", alt: "FilmSort watch history" },
+  { src: "/Screenshot_20260809-135437.jpg", alt: "FilmSort library view" },
+  { src: "/Screenshot_20260829-001544.jpg", alt: "FilmSort organized titles" },
   { src: "/Screenshot_20260809-135503.jpg", alt: "FilmSort organized titles" },
 ];
 

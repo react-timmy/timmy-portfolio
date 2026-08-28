@@ -33,41 +33,33 @@ const COVER_GRADIENTS = {
 /* Auto-advancing carousel for covers with multiple images */
 function CoverCarousel({ images, alt }) {
   const [active, setActive] = useState(0);
-  const [fading, setFading] = useState(false);
-  const timerRef = useRef(null);
-
-  const goTo = (idx) => {
-    if (idx === active) return;
-    setFading(true);
-    setTimeout(() => {
-      setActive(idx);
-      setFading(false);
-    }, 300);
-  };
 
   useEffect(() => {
-    timerRef.current = setTimeout(() => {
-      goTo((active + 1) % images.length);
+    const timer = setInterval(() => {
+      setActive(a => (a + 1) % images.length);
     }, 3200);
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  }, [active, images.length]);
+    return () => clearInterval(timer);
+  }, [images.length]);
 
   return (
     <>
-      <img
-        src={images[active]}
-        alt={alt}
-        style={{
-          position: "absolute", inset: 0,
-          width: "100%", height: "100%",
-          objectFit: "cover",
-          display: "block",
-          opacity: fading ? 0 : 1,
-          transition: "opacity 300ms ease",
-          willChange: "opacity",
-          backfaceVisibility: "hidden",
-        }}
-      />
+      {images.map((src, i) => (
+        <img
+          key={src}
+          src={src}
+          alt={`${alt} ${i + 1}`}
+          style={{
+            position: "absolute", inset: 0,
+            width: "100%", height: "100%",
+            objectFit: "cover",
+            display: "block",
+            opacity: active === i ? 1 : 0,
+            transition: "opacity 600ms ease-in-out",
+            willChange: "opacity",
+            backfaceVisibility: "hidden",
+          }}
+        />
+      ))}
       {/* Dot indicators — top-right */}
       <div style={{
         position: "absolute", top: 10, right: 10,
@@ -76,7 +68,7 @@ function CoverCarousel({ images, alt }) {
         {images.map((_, i) => (
           <button
             key={i}
-            onClick={e => { e.stopPropagation(); goTo(i); }}
+            onClick={e => { e.stopPropagation(); setActive(i); }}
             aria-label={`Slide ${i + 1}`}
             style={{
               width: i === active ? 16 : 5,

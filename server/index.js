@@ -298,6 +298,6 @@ const server = http.createServer(async (req, res) => {
   return sendJson(res, 404, { ok: false, error: "not found" });
 });
 
-server.listen(PORT, "127.0.0.1", () => {
-  console.log(`API server listening on http://localhost:${PORT}`);
+server.listen(PORT, "0.0.0.0", () => {
+  console.log(`API server listening on http://0.0.0.0:${PORT}`);
 });

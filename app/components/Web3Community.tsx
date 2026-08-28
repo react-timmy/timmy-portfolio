@@ -322,9 +322,32 @@ export default function Web3Community() {
   const [posts, setPosts] = useState<Post[]>(() => POSTS.map((u, i) => ({ id: String(i), url: u })));
   const [paused, setPaused] = useState(false);
   const [activeTab, setActiveTab] = useState<'posts' | 'articles'>('posts');
+  const [isInteracting, setIsInteracting] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollPos = useRef(0);
 
   const [metaList, setMetaList] = useState<Meta[] | null>(null);
   const [articlesList, setArticlesList] = useState<Meta[] | null>(null);
+
+  useEffect(() => {
+    let reqId: number;
+    const scroll = () => {
+      if (scrollRef.current && !paused && !isInteracting && window.innerWidth <= 767) {
+        if (Math.abs(scrollPos.current - scrollRef.current.scrollLeft) > 2) {
+          scrollPos.current = scrollRef.current.scrollLeft;
+        }
+        scrollPos.current += 0.5;
+        const halfWidth = scrollRef.current.scrollWidth / 2;
+        if (scrollPos.current >= halfWidth) {
+          scrollPos.current = 0;
+        }
+        scrollRef.current.scrollLeft = scrollPos.current;
+      }
+      reqId = requestAnimationFrame(scroll);
+    };
+    reqId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(reqId);
+  }, [paused, isInteracting]);
 
   useEffect(() => {
     // Fetch scraped metadata for posts
@@ -385,7 +408,7 @@ export default function Web3Community() {
       style={{
         background: "#000000",
         borderTop: "1px solid rgba(255,255,255,0.05)",
-        padding: "96px 0 80px",
+        padding: "48px 0 40px",
         overflow: "hidden",
         position: "relative",
       }}
@@ -500,6 +523,14 @@ export default function Web3Community() {
             className="tweets-marquee-outer"
             aria-label="X posts auto-scroll"
             style={{ paddingLeft: 24 }}
+            ref={scrollRef}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => setIsInteracting(false)}
+            onScroll={() => {
+              if (window.innerWidth <= 767 && isInteracting) {
+                scrollPos.current = scrollRef.current!.scrollLeft;
+              }
+            }}
           >
             <div
               className="tweets-marquee-track"
@@ -611,6 +642,38 @@ export default function Web3Community() {
           animation: tweetScroll 40s linear infinite;
           padding-bottom: 6px;
         }
+
+        @media (max-width: 767px) {
+          .tweets-marquee-outer {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0,
+              black 18px,
+              black calc(100% - 18px),
+              transparent 100%
+            );
+            mask-image: linear-gradient(
+              to right,
+              transparent 0,
+              black 18px,
+              black calc(100% - 18px),
+              transparent 100%
+            );
+          }
+
+          .tweets-marquee-outer::-webkit-scrollbar {
+            display: none;
+          }
+
+          .tweets-marquee-track {
+            animation: none;
+            gap: 12px;
+          }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .tweets-marquee-track { animation: none; }
         }

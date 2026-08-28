@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect, useCallback } from "react";
-
 const AVATAR = "https://pbs.twimg.com/profile_images/1990929564474773504/HkT4wInV_400x400.jpg";
 
 const POSTS = [
@@ -138,9 +137,12 @@ function ArticleCard({ meta }) {
   );
 }
 
-function TweetCard({ meta }) {
+function TweetCard({ meta, onHover }) {
   const [hovered, setHovered] = useState(false);
   const [expanded, setExpanded] = useState(false);
+
+  const enter = () => { setHovered(true); if(onHover) onHover(true); };
+  const leave = () => { setHovered(false); if(onHover) onHover(false); };
 
   // Show title + description, or just description, or just title
   const text = meta.title && meta.description 
@@ -152,8 +154,8 @@ function TweetCard({ meta }) {
       href={meta.url}
       target="_blank"
       rel="noopener noreferrer"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseEnter={enter}
+      onMouseLeave={leave}
       style={{
         position: 'relative',
         width: 320,
@@ -302,9 +304,34 @@ function TweetCard({ meta }) {
 export default function Web3Community() {
   const [posts, setPosts] = useState(() => POSTS.map((u, i) => ({ id: String(i), url: u })));
   const [activeTab, setActiveTab] = useState('posts');
+  const [paused, setPaused] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const scrollRef = useRef(null);
+  const scrollPos = useRef(0);
 
   const [metaList, setMetaList] = useState(null);
   const [articlesList, setArticlesList] = useState(null);
+
+  useEffect(() => {
+    let reqId;
+    const scroll = () => {
+      if (scrollRef.current && !paused && !isInteracting && window.innerWidth <= 767) {
+        // Sync position if user scrolled manually
+        if (Math.abs(scrollPos.current - scrollRef.current.scrollLeft) > 2) {
+          scrollPos.current = scrollRef.current.scrollLeft;
+        }
+        scrollPos.current += 0.5;
+        const halfWidth = scrollRef.current.scrollWidth / 2;
+        if (scrollPos.current >= halfWidth) {
+          scrollPos.current = 0; // loop
+        }
+        scrollRef.current.scrollLeft = scrollPos.current;
+      }
+      reqId = requestAnimationFrame(scroll);
+    };
+    reqId = requestAnimationFrame(scroll);
+    return () => cancelAnimationFrame(reqId);
+  }, [paused, isInteracting]);
 
   useEffect(() => {
     // Fetch scraped metadata for posts
@@ -363,7 +390,7 @@ export default function Web3Community() {
       style={{
         background: "#000000",
         borderTop: "1px solid rgba(255,255,255,0.05)",
-        padding: "96px 0 80px",
+        padding: "48px 0 40px",
         overflow: "hidden",
         position: "relative",
       }}
@@ -478,6 +505,15 @@ export default function Web3Community() {
             className="tweets-marquee-outer"
             aria-label="X posts auto-scroll"
             style={{ paddingLeft: 24 }}
+            ref={scrollRef}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => setIsInteracting(false)}
+            onScroll={() => {
+              if (window.innerWidth <= 767 && isInteracting) {
+                // Keep track updated if manually scrolling
+                scrollPos.current = scrollRef.current.scrollLeft;
+              }
+            }}
           >
             <div
               className="tweets-marquee-track"
@@ -498,6 +534,7 @@ export default function Web3Community() {
                   <TweetCard
                     key={`${meta.url}-${i}`}
                     meta={meta}
+                    onHover={setPaused}
                   />
                 ))
               )}
@@ -588,6 +625,38 @@ export default function Web3Community() {
           -webkit-backface-visibility: hidden;
           backface-visibility: hidden;
         }
+
+        @media (max-width: 767px) {
+          .tweets-marquee-outer {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -webkit-mask-image: linear-gradient(
+              to right,
+              transparent 0,
+              black 18px,
+              black calc(100% - 18px),
+              transparent 100%
+            );
+            mask-image: linear-gradient(
+              to right,
+              transparent 0,
+              black 18px,
+              black calc(100% - 18px),
+              transparent 100%
+            );
+          }
+
+          .tweets-marquee-outer::-webkit-scrollbar {
+            display: none;
+          }
+
+          .tweets-marquee-track {
+            animation: none;
+            gap: 12px;
+          }
+        }
+
         @media (hover: hover) and (pointer: fine) {
           .tweets-marquee-outer:hover .tweets-marquee-track {
             animation-play-state: paused;
@@ -597,8 +666,8 @@ export default function Web3Community() {
           .tweets-marquee-track { animation: none; }
         }
         @keyframes shimmer {
-          0%, 100% { opacity: 0.45; transform: translate3d(0, 0, 0); }
-          50%      { opacity: 1; transform: translate3d(0, 0, 0); }
+          0% { background-position: 200% 0; }
+          100% { background-position: -200% 0; }
         }
       `}</style>
     </section>

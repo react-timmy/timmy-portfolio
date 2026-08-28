@@ -14,7 +14,7 @@ export default function About() {
       id="about"
       style={{
         background: "#000000",
-        padding: "96px 0",
+        padding: "48px 0",
         borderTop: "1px solid rgba(255,255,255,0.05)",
       }}
     >

@@ -26,6 +26,7 @@ const QUICK_STATS = [
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
   const [roleIdx, setRoleIdx]     = useState(0);
+  const [typedRole, setTypedRole] = useState("");
   const [proofIdx, setProofIdx]   = useState(0);
   const [proofVis, setProofVis]   = useState(true);
   const avatarRef = useRef(null);
@@ -35,14 +36,24 @@ export default function Hero() {
     setIsMounted(true);
   }, []);
 
-  /* Rotate the role text without a typing effect. */
+  /* Type and rotate the role text. */
   useEffect(() => {
     if (!isMounted) return;
-    const timer = setInterval(() => {
+    const role = ROLES[roleIdx];
+
+    if (typedRole.length < role.length) {
+      const timer = setTimeout(() => {
+        setTypedRole(role.slice(0, typedRole.length + 1));
+      }, 58);
+      return () => clearTimeout(timer);
+    }
+
+    const timer = setTimeout(() => {
+      setTypedRole("");
       setRoleIdx(index => (index + 1) % ROLES.length);
-    }, 5200);
-    return () => clearInterval(timer);
-  }, [isMounted]);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, [isMounted, roleIdx, typedRole]);
 
   /* Rotate proof */
   useEffect(() => {
@@ -273,7 +284,8 @@ export default function Hero() {
             display: "inline-block",
             whiteSpace: "nowrap",
           }} className="hero-role-text">
-            {ROLES[roleIdx]}
+            {typedRole || "\u00a0"}
+            <span className="hero-role-caret" aria-hidden />
           </span>
         </div>
 
@@ -377,6 +389,7 @@ export default function Hero() {
         .hero-avatar-visual,
         .hero-avatar-ring,
         .hero-role-text,
+        .hero-role-caret,
         .hero-scroll-cue,
         .status-ripple {
           -webkit-backface-visibility: hidden;
@@ -388,10 +401,28 @@ export default function Hero() {
         .hero-scroll-cue {
           will-change: transform, opacity;
         }
+        .hero-role-caret {
+          display: inline-block;
+          width: 2px;
+          height: 0.9em;
+          margin-left: 3px;
+          border-radius: 2px;
+          background: #8b5cf6;
+          transform: translateY(0.12em);
+          animation: caretBlink 900ms steps(1, end) infinite;
+        }
         @keyframes statusRipple {
           0%   { transform: scale(1); opacity: 0.7; }
           70%  { transform: scale(2.4); opacity: 0; }
           100% { transform: scale(2.4); opacity: 0; }
+        }
+        @keyframes statusRippleSoft {
+          0%, 100% { opacity: 0.25; }
+          50%      { opacity: 0.75; }
+        }
+        @keyframes caretBlink {
+          0%, 48%  { opacity: 1; }
+          49%, 100% { opacity: 0; }
         }
         @keyframes scrollFloat {
           0%, 100% { transform: translateX(-50%) translateY(0px); }
@@ -400,12 +431,12 @@ export default function Hero() {
         @media (max-width: 767px) {
           #hero > div { padding-top: 100px !important; padding-bottom: 80px !important; }
           .hero-avatar-ring {
-            animation: none !important;
-            opacity: 0.32 !important;
+            animation: ringBreathe 4.2s ease-in-out infinite !important;
+            opacity: 0.34 !important;
           }
           .status-ripple {
-            animation: none !important;
-            opacity: 0 !important;
+            animation: statusRippleSoft 2.4s ease-in-out infinite !important;
+            transform: translate3d(0, 0, 0) scale(1.35) !important;
           }
           .hero-scroll-cue {
             animation: none !important;

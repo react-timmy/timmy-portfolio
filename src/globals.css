@@ -467,6 +467,11 @@ select.input { cursor: pointer; appearance: none; }
   40%            { transform: scale(1);   opacity: 1; }
 }
 
+@keyframes pulseDotOpacity {
+  0%, 100% { opacity: 0.38; }
+  50%      { opacity: 1; }
+}
+
 .perf-anim {
   /* Promote element to compositor for smoother transform/opacity animations */
   will-change: transform, opacity;
@@ -492,11 +497,24 @@ select.input { cursor: pointer; appearance: none; }
   height: 5px;
   border-radius: 50%;
   background: var(--accent-green);
+  transform: translate3d(0, 0, 0);
   animation: pulseDot 1.2s ease-in-out infinite;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .dot-pulse:nth-child(2) { animation-delay: 0.2s; }
 .dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+
+@media (max-width: 767px) {
+  .dot-pulse {
+    animation: pulseDotOpacity 1.4s ease-in-out infinite;
+    transform: translate3d(0, 0, 0) scale(1);
+    box-shadow: none !important;
+    will-change: opacity;
+  }
+}
 
 /* ─── Cinematic gradient overlay (bottom-heavy like MediaCard) ───────────── */
 .cinema-overlay {

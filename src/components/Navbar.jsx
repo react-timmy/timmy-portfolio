@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useLayoutEffect, useRef, useCallback } from "react";
 
 const AVATAR = "https://pbs.twimg.com/profile_images/1990929564474773504/HkT4wInV_400x400.jpg";
 
@@ -81,8 +81,8 @@ export default function Navbar() {
     rafRef.current = requestAnimationFrame(() => { update(); rafRef.current = null; });
   }, [update]);
 
-  useEffect(() => {
-    scheduleUpdate();
+  useLayoutEffect(() => {
+    update();
     const mq = window.matchMedia("(max-width: 767px)");
     const onMediaChange = () => {
       setMobileView(mq.matches);
@@ -101,7 +101,7 @@ export default function Navbar() {
       mq.removeEventListener("change", onMediaChange);
       if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
     };
-  }, [scheduleUpdate]);
+  }, [scheduleUpdate, update]);
 
   /* Active section tracking */
   useEffect(() => {

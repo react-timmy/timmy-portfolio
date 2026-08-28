@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 
 const AVATAR = "https://pbs.twimg.com/profile_images/1990929564474773504/HkT4wInV_400x400.jpg";
 
@@ -31,9 +31,8 @@ export default function Hero() {
   const avatarRef = useRef(null);
   const avatarVisualRef = useRef(null);
 
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => setIsMounted(true));
-    return () => cancelAnimationFrame(frame);
+  useLayoutEffect(() => {
+    setIsMounted(true);
   }, []);
 
   /* Rotate the role text without a typing effect. */
@@ -55,7 +54,7 @@ export default function Hero() {
   }, []);
 
   /* Publish hero avatar rect so Navbar can pick it up */
-  useEffect(() => {
+  useLayoutEffect(() => {
     const publish = () => {
       const el = avatarRef.current;
       if (!el) return;
@@ -72,7 +71,7 @@ export default function Hero() {
   }, []);
 
   /* Fade avatar out as user scrolls — starts fading after 40px, gone by 160px. */
-  useEffect(() => {
+  useLayoutEffect(() => {
     let raf = null;
 
     const applyAvatarScroll = () => {

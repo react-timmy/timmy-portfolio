@@ -492,28 +492,52 @@ select.input { cursor: pointer; appearance: none; }
 .d-5 { animation-delay: 400ms; }
 
 .dot-pulse {
+  position: relative;
   display: inline-block;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent-green);
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
   transform: translate3d(0, 0, 0);
-  animation: pulseDot 1.2s ease-in-out infinite;
   will-change: transform, opacity;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.dot-pulse::before,
+.dot-pulse::after {
+  content: "";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.dot-pulse::before {
+  background: #4ade80;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.72);
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.dot-pulse::after {
+  border: 1px solid #4ade80;
+  transform: translate3d(-50%, -50%, 0) scale(0.9);
+  animation: contactStatusRipple 2.7s ease-out infinite;
+  will-change: transform, opacity;
 }
 
 .dot-pulse:nth-child(2) { animation-delay: 0.2s; }
 .dot-pulse:nth-child(3) { animation-delay: 0.4s; }
 
-@media (max-width: 767px) {
-  .dot-pulse {
-    animation: pulseDotOpacity 1.4s ease-in-out infinite;
-    transform: translate3d(0, 0, 0) scale(1);
-    box-shadow: none !important;
-    will-change: opacity;
-  }
+@keyframes contactStatusRipple {
+  0%   { transform: translate3d(-50%, -50%, 0) scale(0.9); opacity: 0.56; }
+  68%  { transform: translate3d(-50%, -50%, 0) scale(1.85); opacity: 0; }
+  100% { transform: translate3d(-50%, -50%, 0) scale(1.85); opacity: 0; }
 }
 
 /* ─── Cinematic gradient overlay (bottom-heavy like MediaCard) ───────────── */

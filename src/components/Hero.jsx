@@ -23,10 +23,15 @@ const QUICK_STATS = [
   { value: "24h", label: "Response", color: "#a78bfa" },
 ];
 
+const TYPE_SPEED = 58;
+const DELETE_SPEED = 34;
+const ROLE_HOLD_MS = 1600;
+
 export default function Hero() {
   const [isMounted, setIsMounted] = useState(false);
   const [roleIdx, setRoleIdx]     = useState(0);
   const [typedRole, setTypedRole] = useState("");
+  const [typingPhase, setTypingPhase] = useState("typing");
   const [proofIdx, setProofIdx]   = useState(0);
   const [proofVis, setProofVis]   = useState(true);
   const avatarRef = useRef(null);
@@ -41,19 +46,33 @@ export default function Hero() {
     if (!isMounted) return;
     const role = ROLES[roleIdx];
 
-    if (typedRole.length < role.length) {
+    if (typingPhase === "typing") {
+      if (typedRole.length >= role.length) {
+        const timer = setTimeout(() => setTypingPhase("deleting"), ROLE_HOLD_MS);
+        return () => clearTimeout(timer);
+      }
+
       const timer = setTimeout(() => {
         setTypedRole(role.slice(0, typedRole.length + 1));
-      }, 58);
+      }, TYPE_SPEED);
       return () => clearTimeout(timer);
     }
 
-    const timer = setTimeout(() => {
-      setTypedRole("");
-      setRoleIdx(index => (index + 1) % ROLES.length);
-    }, 2200);
-    return () => clearTimeout(timer);
-  }, [isMounted, roleIdx, typedRole]);
+    if (typingPhase === "deleting") {
+      if (typedRole.length === 0) {
+        setRoleIdx(index => (index + 1) % ROLES.length);
+        setTypingPhase("typing");
+        return undefined;
+      }
+
+      const timer = setTimeout(() => {
+        setTypedRole(role.slice(0, typedRole.length - 1));
+      }, DELETE_SPEED);
+      return () => clearTimeout(timer);
+    }
+
+    return undefined;
+  }, [isMounted, roleIdx, typedRole, typingPhase]);
 
   /* Rotate proof */
   useEffect(() => {

@@ -148,7 +148,7 @@ export default function Contact() {
                 <span style={{ color: "#d4d4d8" }}>timmy --availability</span>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                <span className="dot-pulse" style={{ background: "#4ade80" }} />
+                <span className="dot-pulse" />
                 <span style={{ color: "#4ade80", fontWeight: 700 }}>open · response ~24h</span>
               </div>
               <div className="dim" style={{ paddingLeft: 13 }}>timezone: WAT (UTC+1)</div>
@@ -348,7 +348,7 @@ export default function Contact() {
                       <span style={{ color: "#d4d4d8" }}>timmy --availability</span>
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-                      <span className="dot-pulse" style={{ background: "#4ade80" }} />
+                      <span className="dot-pulse" />
                       <span style={{ color: "#4ade80", fontWeight: 700 }}>open · response ~24h</span>
                     </div>
                     <div className="dim" style={{ paddingLeft: 13 }}>timezone: WAT (UTC+1)</div>

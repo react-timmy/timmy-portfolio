@@ -212,8 +212,10 @@ export default function Navbar() {
                 flexShrink: 0,
                 /* Fade in only once avatar has landed */
                 opacity: landed ? 1 : 0,
-                transform: landed ? "scale(1)" : "scale(0.7)",
+                transform: landed ? "translate3d(0, 0, 0) scale(1)" : "translate3d(0, 0, 0) scale(0.7)",
                 transition: "opacity 220ms ease, transform 220ms ease",
+                willChange: "transform, opacity",
+                backfaceVisibility: "hidden",
               }}
             >
               <img
@@ -263,7 +265,7 @@ export default function Navbar() {
               }}>
                 <div style={{
                   transition: "transform 300ms cubic-bezier(.2,.9,.2,1)",
-                  transform: menuOpen ? "translateY(-50%)" : "translateY(0%)",
+                  transform: menuOpen ? "translate3d(0, -50%, 0)" : "translate3d(0, 0, 0)",
                   willChange: "transform",
                 }}>
                   <div style={{ height: 14, lineHeight: "14px" }}>@_devTimmy</div>
@@ -294,7 +296,7 @@ export default function Navbar() {
                   {on && (
                     <span style={{
                       position: "absolute", bottom: 4, left: "50%",
-                      transform: "translateX(-50%)",
+                      transform: "translate3d(-50%, 0, 0)",
                       width: 4, height: 4, borderRadius: "50%",
                       background: "#8b5cf6",
                     }} />
@@ -352,7 +354,7 @@ export default function Navbar() {
             <svg
               width="22" height="22" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
-              style={{ transition: "transform 300ms ease", transform: menuOpen ? "rotate(90deg)" : "rotate(0deg)" }}
+              style={{ transition: "transform 300ms ease", transform: menuOpen ? "translate3d(0, 0, 0) rotate(90deg)" : "translate3d(0, 0, 0) rotate(0deg)" }}
             >
               {menuOpen ? (
                 <>
@@ -429,11 +431,11 @@ export default function Navbar() {
 
       <style>{`
         @keyframes heartbeat {
-          0%, 100% { transform: scale(1);    opacity: 1;    }
-          14%       { transform: scale(1.35); opacity: 1;    }
-          28%       { transform: scale(1);    opacity: 1;    }
-          42%       { transform: scale(1.2);  opacity: 0.85; }
-          70%       { transform: scale(1);    opacity: 1;    }
+          0%, 100% { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
+          14%       { transform: translate3d(0, 0, 0) scale(1.35); opacity: 1;    }
+          28%       { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
+          42%       { transform: translate3d(0, 0, 0) scale(1.2);  opacity: 0.85; }
+          70%       { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
         }
       `}</style>
     </>

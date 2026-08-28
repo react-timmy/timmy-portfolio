@@ -43,10 +43,12 @@ function ArticleCard({ meta }) {
         flexDirection: 'column',
         gap: 12,
         transition: 'transform 150ms ease, box-shadow 150ms ease',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
+        transform: hovered ? 'translate3d(0, -4px, 0)' : 'translate3d(0, 0, 0)',
         boxShadow: hovered
           ? '0 16px 48px rgba(0,0,0,0.7)'
           : '0 4px 20px rgba(0,0,0,0.5)',
+        willChange: 'transform, opacity',
+        backfaceVisibility: 'hidden',
       }}
     >
       {/* Image with title overlay */}
@@ -572,8 +574,8 @@ export default function Web3Community() {
         }
 
         @keyframes tweetScroll {
-          from { transform: translateX(0); }
-          to   { transform: translateX(-50%); }
+          from { transform: translate3d(0, 0, 0); }
+          to   { transform: translate3d(-50%, 0, 0); }
         }
 
         .tweets-marquee-track {
@@ -582,6 +584,9 @@ export default function Web3Community() {
           width: max-content;
           animation: tweetScroll 40s linear infinite;
           padding-bottom: 6px;
+          will-change: transform;
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
         }
         @media (hover: hover) and (pointer: fine) {
           .tweets-marquee-outer:hover .tweets-marquee-track {
@@ -592,8 +597,8 @@ export default function Web3Community() {
           .tweets-marquee-track { animation: none; }
         }
         @keyframes shimmer {
-          0% { background-position: 200% 0; }
-          100% { background-position: -200% 0; }
+          0%, 100% { opacity: 0.45; transform: translate3d(0, 0, 0); }
+          50%      { opacity: 1; transform: translate3d(0, 0, 0); }
         }
       `}</style>
     </section>

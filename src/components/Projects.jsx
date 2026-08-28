@@ -64,6 +64,8 @@ function CoverCarousel({ images, alt }) {
           display: "block",
           opacity: fading ? 0 : 1,
           transition: "opacity 300ms ease",
+          willChange: "opacity",
+          backfaceVisibility: "hidden",
         }}
       />
       {/* Dot indicators — top-right */}
@@ -132,19 +134,22 @@ export default function Projects() {
                   background: "#0d0d0d",
                   border: "1px solid rgba(255,255,255,0.08)",
                   transition: "border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease",
+                  willChange: "transform, opacity",
+                  transform: "translate3d(0, 0, 0)",
+                  backfaceVisibility: "hidden",
                   animationDelay: `${i * 60}ms`,
                   minWidth: "calc(100vw - 40px)",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget;
                   el.style.borderColor = `${cat.color}40`;
-                  el.style.transform = "translateY(-3px)";
+                  el.style.transform = "translate3d(0, -3px, 0)";
                   el.style.boxShadow = `0 20px 60px rgba(0,0,0,0.7), 0 0 40px ${cat.color}15`;
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget;
                   el.style.borderColor = "rgba(255,255,255,0.08)";
-                  el.style.transform = "translateY(0)";
+                  el.style.transform = "translate3d(0, 0, 0)";
                   el.style.boxShadow = "none";
                 }}
               >

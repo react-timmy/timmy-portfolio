@@ -338,8 +338,10 @@ export default function Hero() {
           <div style={{
             display: "inline-flex", alignItems: "center", gap: 7,
             opacity: proofVis ? 1 : 0,
-            transform: proofVis ? "translateY(0)" : "translateY(6px)",
+            transform: proofVis ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0)",
             transition: "opacity 260ms ease, transform 260ms ease",
+            willChange: "transform, opacity",
+            backfaceVisibility: "hidden",
           }}>
             <span style={{ fontSize: 12, color: proof.color }}>{proof.icon}</span>
             <span style={{ fontSize: 12, fontWeight: 600, color: "#71717a" }}>{proof.text}</span>
@@ -353,7 +355,7 @@ export default function Hero() {
         aria-label="Scroll to projects"
         className="hero-scroll-cue"
         style={{
-          position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)",
+          position: "absolute", bottom: 36, left: "50%", transform: "translate3d(-50%, 0, 0)",
           display: "flex", flexDirection: "column", alignItems: "center", gap: 7,
           fontSize: 9, fontWeight: 800, letterSpacing: "0.2em", textTransform: "uppercase",
           color: "#27272a", textDecoration: "none", transition: "color 150ms ease", zIndex: 10,
@@ -372,11 +374,11 @@ export default function Hero() {
           50%       { opacity: 0.58; transform: translate3d(0, 0, 0) scale(1.04); }
         }
         @keyframes heartbeat {
-          0%, 100% { transform: scale(1);    opacity: 1;    }
-          14%       { transform: scale(1.35); opacity: 1;    }
-          28%       { transform: scale(1);    opacity: 1;    }
-          42%       { transform: scale(1.2);  opacity: 0.85; }
-          70%       { transform: scale(1);    opacity: 1;    }
+          0%, 100% { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
+          14%       { transform: translate3d(0, 0, 0) scale(1.35); opacity: 1;    }
+          28%       { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
+          42%       { transform: translate3d(0, 0, 0) scale(1.2);  opacity: 0.85; }
+          70%       { transform: translate3d(0, 0, 0) scale(1);    opacity: 1;    }
         }
         .status-ripple {
           position: absolute;
@@ -414,21 +416,21 @@ export default function Hero() {
           animation: caretPulse 1.15s ease-in-out infinite;
         }
         @keyframes statusRipple {
-          0%   { transform: scale(1); opacity: 0.7; }
-          70%  { transform: scale(2.4); opacity: 0; }
-          100% { transform: scale(2.4); opacity: 0; }
+          0%   { transform: translate3d(0, 0, 0) scale(1); opacity: 0.7; }
+          70%  { transform: translate3d(0, 0, 0) scale(2.4); opacity: 0; }
+          100% { transform: translate3d(0, 0, 0) scale(2.4); opacity: 0; }
         }
         @keyframes statusRippleSoft {
-          0%, 100% { opacity: 0.25; }
-          50%      { opacity: 0.75; }
+          0%, 100% { transform: translate3d(0, 0, 0) scale(1.35); opacity: 0.25; }
+          50%      { transform: translate3d(0, 0, 0) scale(1.35); opacity: 0.75; }
         }
         @keyframes caretPulse {
           0%, 100% { opacity: 0.28; transform: translate3d(0, 0.12em, 0); }
           50%      { opacity: 0.95; transform: translate3d(0, 0.12em, 0); }
         }
         @keyframes scrollFloat {
-          0%, 100% { transform: translateX(-50%) translateY(0px); }
-          50%       { transform: translateX(-50%) translateY(-8px); }
+          0%, 100% { transform: translate3d(-50%, 0, 0); }
+          50%       { transform: translate3d(-50%, -8px, 0); }
         }
         @media (max-width: 767px) {
           #hero > div { padding-top: 100px !important; padding-bottom: 80px !important; }
@@ -447,7 +449,7 @@ export default function Hero() {
           }
           .hero-scroll-cue {
             animation: none !important;
-            transform: translateX(-50%) translate3d(0, 0, 0) !important;
+            transform: translate3d(-50%, 0, 0) !important;
           }
         }
       `}</style>

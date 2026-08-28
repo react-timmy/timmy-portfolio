@@ -205,7 +205,7 @@ img { display: block; max-width: 100%; }
 .card:hover {
   background: var(--bg-card-elevated);
   border-color: var(--border-mid);
-  transform: translateY(-2px);
+  transform: translate3d(0, -2px, 0);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
 }
 
@@ -240,11 +240,11 @@ img { display: block; max-width: 100%; }
 
 .btn-primary:hover {
   opacity: 0.88;
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
 }
 
-.btn-primary:active { transform: scale(0.97); }
+.btn-primary:active { transform: translate3d(0, 0, 0) scale(0.97); }
 
 /* ─── Red accent button — CTAs (primary accent) ─────────────────────────── */
 .btn-red {
@@ -269,7 +269,7 @@ img { display: block; max-width: 100%; }
 
 .btn-red:hover {
   opacity: 0.88;
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
   box-shadow: 0 8px 24px var(--glow-primary);
 }
 
@@ -300,7 +300,7 @@ img { display: block; max-width: 100%; }
 .btn-glass:hover {
   background: rgba(255, 255, 255, 0.13);
   color: #ffffff;
-  transform: translateY(-1px);
+  transform: translate3d(0, -1px, 0);
 }
 
 /* Mobile browsers frequently repaint backdrop filters during scroll/animation. */
@@ -443,8 +443,8 @@ select.input { cursor: pointer; appearance: none; }
    ══════════════════════════════════════════════════════════════════════════ */
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate3d(0, 14px, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes fadeIn {
@@ -453,18 +453,18 @@ select.input { cursor: pointer; appearance: none; }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(20px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from { opacity: 0; transform: translate3d(20px, 0, 0); }
+  to   { opacity: 1; transform: translate3d(0, 0, 0); }
 }
 
 @keyframes redGlow {
-  0%, 100% { box-shadow: 0 0 0   0 rgba(139, 92, 246, 0);    }
-  50%       { box-shadow: 0 0 28px 4px rgba(139, 92, 246, 0.22); }
+  0%, 100% { opacity: 0.82; transform: translate3d(0, 0, 0) scale(1); }
+  50%      { opacity: 1; transform: translate3d(0, 0, 0) scale(1.01); }
 }
 
 @keyframes pulseDot {
-  0%, 80%, 100% { transform: scale(0.5); opacity: 0.35; }
-  40%            { transform: scale(1);   opacity: 1; }
+  0%, 80%, 100% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0.35; }
+  40%            { transform: translate3d(0, 0, 0) scale(1);   opacity: 1; }
 }
 
 @keyframes pulseDotOpacity {
@@ -734,8 +734,8 @@ select.input { cursor: pointer; appearance: none; }
 
 /* ─── X posts marquee (auto-scroll) ─────────────────────────────────────── */
 @keyframes xMarquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 
 /* Outer wrapper — clips overflow, adds fade edges */
@@ -770,6 +770,9 @@ select.input { cursor: pointer; appearance: none; }
   width: max-content;
   animation: xMarquee 38s linear infinite;
   padding-bottom: 4px; /* keep card shadows visible */
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 /* Pause on hover so users can read a card */

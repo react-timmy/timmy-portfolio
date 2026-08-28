@@ -51,7 +51,8 @@ export default function Navbar() {
     setPA(newPA);
     setPB(newPB);
 
-    if (window.matchMedia("(max-width: 767px)").matches) {
+    const isMobile = window.matchMedia("(max-width: 767px)").matches;
+    if (isMobile) {
       setFly(null);
       return;
     }

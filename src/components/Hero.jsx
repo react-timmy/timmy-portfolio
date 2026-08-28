@@ -327,24 +327,27 @@ export default function Hero() {
         </div>
 
         {/* ── Proof ticker ─────────────────────────────────────────────── */}
-        <div className="anim-fade-up d-5" style={{
+        <div className="anim-fade-up d-5 hero-proof-ticker" style={{
           display: "flex", alignItems: "center", gap: 10,
           marginBottom: 36, height: 28,
+          maxWidth: "100%",
+          overflow: "hidden",
         }}>
           <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "#27272a" }}>
             Recent
           </span>
           <span style={{ width: 1, height: 14, background: "#27272a" }} />
-          <div style={{
+          <div className="hero-proof-content" style={{
             display: "inline-flex", alignItems: "center", gap: 7,
             opacity: proofVis ? 1 : 0,
             transform: proofVis ? "translate3d(0, 0, 0)" : "translate3d(0, 6px, 0)",
             transition: "opacity 260ms ease, transform 260ms ease",
             willChange: "transform, opacity",
             backfaceVisibility: "hidden",
+            minWidth: 0,
           }}>
             <span style={{ fontSize: 12, color: proof.color }}>{proof.icon}</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: "#71717a" }}>{proof.text}</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "#71717a", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{proof.text}</span>
           </div>
         </div>
       </div>
@@ -390,6 +393,7 @@ export default function Hero() {
         }
         .hero-avatar-visual,
         .hero-avatar-ring,
+        .hero-proof-content,
         .hero-role-text,
         .hero-role-caret,
         .hero-scroll-cue,
@@ -399,6 +403,7 @@ export default function Hero() {
           transform-style: preserve-3d;
         }
         .hero-avatar-visual,
+        .hero-proof-content,
         .hero-role-text,
         .hero-role-caret,
         .hero-scroll-cue {
@@ -445,6 +450,15 @@ export default function Hero() {
           .hero-role-caret {
             animation: caretPulse 1.35s ease-in-out infinite !important;
             transform: translate3d(0, 0.12em, 0) !important;
+            will-change: opacity;
+          }
+          .hero-proof-ticker {
+            justify-content: center;
+            width: 100%;
+          }
+          .hero-proof-content {
+            transform: translate3d(0, 0, 0) !important;
+            transition: opacity 300ms ease !important;
             will-change: opacity;
           }
           .hero-scroll-cue {

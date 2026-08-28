@@ -1,0 +1,725 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   FilmSort Design System — Portfolio Edition
+   Exact tokens extracted from FilmSort app source
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Backgrounds — pure black base */
+  --bg-root:          #000000;
+  --bg-deep:          #0b0b0b;
+  --bg-card:          rgba(255, 255, 255, 0.04);
+  --bg-card-elevated: rgba(255, 255, 255, 0.06);
+  --bg-input:         rgba(255, 255, 255, 0.04);
+  --bg-modal:         rgba(15, 15, 18, 0.97);
+
+  /* Borders */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-mid:    rgba(255, 255, 255, 0.10);
+  --border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Text */
+  --text-primary:     #ffffff;
+  --text-body:        #a1a1aa;
+  --text-muted:       #52525b;
+  --text-description: #d4d4d8;
+
+  /* Accents */
+  --accent-primary: #8b5cf6;  /* Portfolio primary — violet */
+  --accent-red:    #8b5cf6;   /* collapsed to primary */
+  --accent-green:  #4ade80;   /* Ratings / success (green pulse) */
+  --accent-amber:  #8b5cf6;   /* collapsed to primary */
+  --accent-blue:   #8b5cf6;   /* collapsed to primary */
+  --accent-yellow: #8b5cf6;   /* collapsed to primary */
+  --accent-pink:   #8b5cf6;   /* collapsed to primary */
+
+  /* Glow */
+  --glow-red:     rgba(139, 92, 246, 0.28);
+  --glow-primary: rgba(139, 92, 246, 0.28);
+  --glow-green:   rgba(139, 92, 246, 0.18);
+
+  /* Radius */
+  --radius-sm:   8px;
+  --radius-md:   14px;
+  --radius-lg:   18px;
+  --radius-xl:   20px;
+  --radius-pill: 9999px;
+
+  /* Motion — expo-style spring feel */
+  --ease-spring: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out:    cubic-bezier(0.0, 0.0, 0.2, 1);
+  --dur-micro:   150ms;
+  --dur-reveal:  400ms;
+  --dur-enter:   550ms;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background: var(--bg-root);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ─── Typography — FilmSort weight scale ────────────────────────────────── */
+h1, h2, h3, h4 { line-height: 1.1; color: var(--text-primary); }
+
+/* Display — fontWeight 900, letterSpacing -0.4 like app headers */
+h1 {
+  font-size: clamp(2.75rem, 7vw, 4.5rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h3 {
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+p  { color: var(--text-body); line-height: 1.75; }
+a  { color: var(--accent-red); text-decoration: none; }
+a:hover { opacity: 0.8; }
+
+code, kbd, pre {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.8125rem;
+}
+
+img { display: block; max-width: 100%; }
+
+/* ─── Focus ──────────────────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ─── Selection ──────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(139, 92, 246, 0.28);
+  color: #ffffff;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar              { width: 4px; }
+::-webkit-scrollbar-track        { background: #000000; }
+::-webkit-scrollbar-thumb        { background: #27272a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover  { background: #3f3f46; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COMPONENT CLASSES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* ─── Glass card — CARD_BG + CARD_BORDER from FilmSort ProfileScreen ─────── */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--dur-micro) ease,
+    background   var(--dur-micro) ease,
+    transform    var(--dur-micro) var(--ease-spring),
+    box-shadow   var(--dur-micro) ease;
+}
+
+.card:hover {
+  background: var(--bg-card-elevated);
+  border-color: var(--border-mid);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+}
+
+/* Card with purple glow on hover — flagship / featured */
+.card-featured:hover {
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.6),
+    0 0 32px var(--glow-primary);
+}
+
+/* ─── Primary button — white fill + black text (FilmSort play button) ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.375rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #000000;
+  background: #ffffff;
+  cursor: pointer;
+  border: none;
+  letter-spacing: -0.01em;
+  transition:
+    opacity      var(--dur-micro) ease,
+    transform    var(--dur-micro) var(--ease-spring),
+    box-shadow   var(--dur-micro) ease;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:active { transform: scale(0.97); }
+
+/* ─── Red accent button — CTAs (primary accent) ─────────────────────────── */
+.btn-red {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.375rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #ffffff;
+  background: var(--accent-primary);
+  cursor: pointer;
+  border: none;
+  letter-spacing: -0.01em;
+  transition:
+    opacity    var(--dur-micro) ease,
+    transform  var(--dur-micro) var(--ease-spring),
+    box-shadow var(--dur-micro) ease;
+  white-space: nowrap;
+}
+
+.btn-red:hover {
+  opacity: 0.88;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--glow-primary);
+}
+
+/* ─── Glass button — BlurView secondary (FilmSort "Details" button) ─────── */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.375rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-description);
+  background: rgba(255, 255, 255, 0.08);
+  /* Temporarily disable GPU-backed blur to check for dev-time flicker */
+  /* backdrop-filter: blur(12px); */
+  /* -webkit-backdrop-filter: blur(12px); */
+  border: 1px solid var(--border-mid);
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition:
+    background var(--dur-micro) ease,
+    color      var(--dur-micro) ease,
+    transform  var(--dur-micro) var(--ease-spring);
+  white-space: nowrap;
+}
+
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.13);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* Mobile browsers frequently repaint backdrop filters during scroll/animation. */
+.site-header,
+.site-mobile-drawer {
+  isolation: isolate;
+}
+
+@media (max-width: 767px) {
+  .site-header,
+  .site-mobile-drawer {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  .anim-glow {
+    animation: none !important;
+  }
+}
+
+/* ─── Pill badge — type pills from LibraryView ───────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--text-body);
+}
+
+.badge-red, .badge-green, .badge-amber, .badge-blue, .badge-yellow {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.22);
+  color: #a78bfa;
+}
+
+/* ─── Section eyebrow label ──────────────────────────────────────────────── */
+.section-label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-primary);
+  margin-bottom: 0.5rem;
+}
+
+/* ─── Terminal block ─────────────────────────────────────────────────────── */
+.terminal {
+  background: #0b0b0b;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.125rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  position: relative;
+  overflow: hidden;
+}
+
+/* macOS dots */
+.terminal::before {
+  content: '';
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #27272a;
+  box-shadow: 14px 0 0 #27272a, 28px 0 0 #27272a;
+  margin-bottom: 0.875rem;
+}
+
+.terminal .prompt { color: var(--accent-primary); }
+.terminal .ok     { color: var(--accent-primary); }
+.terminal .dim    { color: var(--text-muted); }
+
+/* ─── Stat card (from FilmSort LibraryView statsRow) ────────────────────── */
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 1;
+  padding: 0.875rem 0.5rem;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* ─── Red divider line ───────────────────────────────────────────────────── */
+.divider-red {
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-primary) 0%, transparent 100%);
+  border: none;
+  border-radius: 1px;
+}
+
+/* ─── Input ──────────────────────────────────────────────────────────────── */
+.input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-family: inherit;
+  color: #ffffff;
+  outline: none;
+  transition: border-color var(--dur-micro) ease;
+}
+
+.input::placeholder { color: var(--text-muted); }
+.input:focus { border-color: rgba(139, 92, 246, 0.45); }
+
+select.input { cursor: pointer; appearance: none; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ANIMATIONS
+   ══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes redGlow {
+  0%, 100% { box-shadow: 0 0 0   0 rgba(139, 92, 246, 0);    }
+  50%       { box-shadow: 0 0 28px 4px rgba(139, 92, 246, 0.22); }
+}
+
+@keyframes pulseDot {
+  0%, 80%, 100% { transform: scale(0.5); opacity: 0.35; }
+  40%            { transform: scale(1);   opacity: 1; }
+}
+
+.perf-anim {
+  /* Promote element to compositor for smoother transform/opacity animations */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.anim-fade-up  { animation: fadeUp  var(--dur-reveal) var(--ease-spring) both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-fade-in  { animation: fadeIn  var(--dur-reveal) ease both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-slide-in { animation: slideInRight var(--dur-reveal) var(--ease-spring) both; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.anim-glow     { animation: redGlow 3s ease-in-out infinite; will-change: transform, opacity; transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+
+.d-1 { animation-delay: 80ms;  }
+.d-2 { animation-delay: 160ms; }
+.d-3 { animation-delay: 240ms; }
+.d-4 { animation-delay: 320ms; }
+.d-5 { animation-delay: 400ms; }
+
+.dot-pulse {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  animation: pulseDot 1.2s ease-in-out infinite;
+}
+
+.dot-pulse:nth-child(2) { animation-delay: 0.2s; }
+.dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+
+/* ─── Cinematic gradient overlay (bottom-heavy like MediaCard) ───────────── */
+.cinema-overlay {
+  background: linear-gradient(
+    to top,
+    #000000      0%,
+    #000000      25%,
+    rgba(0,0,0,0.6) 55%,
+    rgba(0,0,0,0.1) 100%
+  );
+}
+
+/* ─── Section divider ────────────────────────────────────────────────────── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 3rem;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+/* ─── Red accent line (like active tab indicator) ─────────────────────────── */
+.active-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: 1px;
+}
+
+/* ─── FilmSort feature highlights grid ──────────────────────────────────── */
+.filmsort-feature-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 600px) {
+  .filmsort-feature-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .filmsort-feature-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ─── Featured projects grid ─────────────────────────────────────────────── */
+.projects-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 12px;
+  width: 100%;
+}
+
+/* (Removed horizontal auto-scroll for mobile — projects now stack vertically on small screens)
+   Keyframe animation and the .auto-scroll class were removed to avoid unwanted horizontal movement.
+*/
+
+/* Vertical scrollbar styling (if any scrolling occurs) */
+.projects-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.projects-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.projects-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.projects-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Fade masks on edges for auto-scroll */
+.projects-grid-wrapper {
+  position: relative;
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.projects-grid-wrapper::before,
+.projects-grid-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.projects-grid-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, #000000, transparent);
+}
+
+.projects-grid-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, #000000, transparent);
+}
+
+/* Grid layout for tablet and above */
+@media (min-width: 640px) {
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    overflow-x: visible;
+    animation: none !important;
+    padding-bottom: 0;
+    width: auto;
+  }
+
+  .projects-grid article {
+    min-width: auto !important;
+  }
+
+  .projects-grid-wrapper {
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+  }
+
+  .projects-grid-wrapper::before,
+  .projects-grid-wrapper::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ─── Contact section layout ─────────────────────────────────────────────── */
+.contact-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* sidebar hidden on mobile — form is full width */
+.contact-sidebar {
+  display: none;
+}
+
+/* header description visible on mobile, hidden on desktop (sidebar takes over) */
+.contact-header-desc {
+  display: block;
+}
+
+/* mobile extras (social + terminal inside form card) visible by default */
+.contact-form-mobile-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+/* Ensure form fields fill card width on small screens (prevent cramped inputs) */
+.contact-layout .card input,
+.contact-layout .card textarea,
+.contact-layout .card select {
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+@media (min-width: 1024px) {
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .contact-sidebar {
+    display: block;
+    position: sticky;
+    top: 32px;
+  }
+
+  .contact-header-desc {
+    display: none;
+  }
+
+  .contact-form-mobile-extras {
+    display: none;
+  }
+}
+.filmsort-screenshots {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+@media (min-width: 640px) {
+  .filmsort-screenshots {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
+/* ─── X posts marquee (auto-scroll) ─────────────────────────────────────── */
+@keyframes xMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Outer wrapper — clips overflow, adds fade edges */
+.x-marquee-outer {
+  position: relative;
+}
+
+/* Fade masks on left & right edges */
+.x-marquee-outer::before,
+.x-marquee-outer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+.x-marquee-outer::before {
+  left: 0;
+  background: linear-gradient(to right, #000000, transparent);
+}
+.x-marquee-outer::after {
+  right: 0;
+  background: linear-gradient(to left, #000000, transparent);
+}
+
+/* Scrolling track */
+.x-marquee-track {
+  display: flex;
+  gap: 14px;
+  width: max-content;
+  animation: xMarquee 38s linear infinite;
+  padding-bottom: 4px; /* keep card shadows visible */
+}
+
+/* Pause on hover so users can read a card */
+.x-marquee-outer:hover .x-marquee-track {
+  animation-play-state: paused;
+}
+
+/* Individual post card */
+.x-post-card {
+  width: 300px;
+  flex-shrink: 0;
+  padding: 20px 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  cursor: default;
+  /* lift card hover without fighting the marquee transform */
+  transition: border-color 150ms ease, background 150ms ease, box-shadow 150ms ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  html { scroll-behavior: auto; }
+}

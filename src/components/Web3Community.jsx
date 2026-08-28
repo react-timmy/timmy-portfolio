@@ -89,7 +89,7 @@ function ArticleCard({ meta }) {
                   const first = lines[0];
                   // if first line is short-ish, use it; otherwise take first sentence
                   if (first.length <= 120) return first;
-                  const sentence = first.split(/[\.\!\?]\s/)[0];
+                  const sentence = first.split(/[.!?]\s/)[0];
                   if (sentence && sentence.length <= 140) return sentence;
                   return first.slice(0, 140).trim();
                 }
@@ -264,7 +264,7 @@ function TweetCard({ meta }) {
             </button>
           )}
         </div>
-      ) }
+      ) : null}
 
       {/* Attached image — below text, rounded border with fade to void */}
       {meta.image ? (
@@ -292,7 +292,7 @@ function TweetCard({ meta }) {
             pointerEvents: 'none',
           }} />
         </div>
-      ) }
+      ) : null}
     </a>
   );
 }

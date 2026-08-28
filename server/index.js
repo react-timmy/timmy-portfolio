@@ -137,7 +137,9 @@ function extractMeta(html) {
         for (const candidate of candidates) {
           if (candidate.length > description.length) description = candidate;
         }
-      } catch {}
+      } catch {
+        // Ignore malformed JSON-LD and continue with other metadata fallbacks.
+      }
     }
 
     if (!description || description.length < 100) {
@@ -296,6 +298,6 @@ const server = http.createServer(async (req, res) => {
   return sendJson(res, 404, { ok: false, error: "not found" });
 });
 
-server.listen(PORT, () => {
+server.listen(PORT, "127.0.0.1", () => {
   console.log(`API server listening on http://localhost:${PORT}`);
 });

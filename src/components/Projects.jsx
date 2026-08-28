@@ -50,7 +50,6 @@ function CoverCarousel({ images, alt }) {
       goTo((active + 1) % images.length);
     }, 3200);
     return () => { if (timerRef.current) clearTimeout(timerRef.current); };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, images.length]);
 
   return (

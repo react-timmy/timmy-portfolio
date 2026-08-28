@@ -6,7 +6,7 @@ As an AI-first full-stack developer, I work from concept to production: shaping 
 
 ## How I can help
 
-- Build MVPs and production-ready web apps with Next.js, React, and TypeScript
+- Build MVPs and production-ready web apps with React, Vite, and TypeScript
 - Create cross-platform mobile products with React Native
 - Add thoughtful AI features to real products and workflows
 - Turn rough ideas into clear, fast, conversion-focused interfaces
@@ -25,7 +25,7 @@ For collaborations and client work:
 
 ## About this project
 
-This portfolio is built with Next.js, React, TypeScript, Tailwind CSS, and responsive custom styling. It is designed to present my work clearly while staying fast, accessible, and easy to maintain.
+This portfolio is built with React, Vite, Tailwind CSS, and a small Node API for metadata previews. It is designed to present my work clearly while staying fast, accessible, and easy to maintain.
 
 ## Run locally
 
@@ -35,20 +35,22 @@ Install dependencies:
 npm install
 ```
 
-Start the development server:
+Start the development servers:
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open the Vite URL printed in your terminal, usually [http://localhost:5173](http://localhost:5173). The API server runs on port `4174` and is proxied by Vite.
 
 ## Available scripts
 
 ```bash
-npm run dev      # Start the development server
+npm run dev      # Start the Vite app and local API server
+npm run dev:web  # Start only the Vite app
+npm run dev:api  # Start only the local API server
 npm run build    # Create a production build
-npm run start    # Start the production server
+npm run preview  # Preview the production build
+npm run start    # Alias for preview
 npm run lint     # Run ESLint
 ```
-

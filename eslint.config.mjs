@@ -2,15 +2,18 @@ import js from "@eslint/js";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 const eslintConfig = defineConfig([
-  js.configs.recommended,
   globalIgnores([
-    ".next/**",
-    "dist/**",
-    "node_modules/**",
+    "**/.next/**",
+    "**/dist/**",
+    "**/node_modules/**",
+    "devtimmy-portfolio/**",
+    "app/**",
     "next-env.d.ts",
+    "postcss.config.js",
+    "tailwind.config.js",
   ]),
   {
-    files: ["src/**/*.{js,jsx}", "server/**/*.js"],
+    files: ["src/**/*.{js,jsx}", "server/**/*.js", "*.mjs"],
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
@@ -41,7 +44,14 @@ const eslintConfig = defineConfig([
       },
     },
     rules: {
+      ...js.configs.recommended.rules,
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
+    },
+  },
+  {
+    files: ["src/**/*.jsx"],
+    rules: {
+      "no-unused-vars": "off",
     },
   },
 ]);

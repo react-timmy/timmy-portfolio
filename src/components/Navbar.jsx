@@ -234,7 +234,10 @@ export default function Navbar() {
             </div>
 
             {/* Name — large at top, shrinks once user scrolls */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+            <div style={{
+              display: "flex", flexDirection: "column", justifyContent: "center",
+              transform: `translateX(-${(NAV_AVATAR_SIZE + 10) * (1 - pB)}px)`
+            }}>
               <span style={{
                 fontWeight: 900,
                 color: "#ffffff",

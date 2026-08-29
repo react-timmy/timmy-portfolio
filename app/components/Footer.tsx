@@ -19,6 +19,7 @@ const NAV_COLS = [
     links: [
       { label: "X / Twitter", href: "https://x.com/_devTimmy"          },
       { label: "GitHub",      href: "https://github.com/react-timmy"   },
+      { label: "LinkedIn",    href: "https://www.linkedin.com/in/devtimmy/" },
       { label: "Email",       href: "mailto:colesustain00@gmail.com"   },
     ],
   },

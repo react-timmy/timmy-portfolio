@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://devtimmy.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://solo-devtimmy.vercel.app";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,7 +26,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Timmy | AI-First Full-Stack Developer, Mobile Developer, Content Creator",
+    default: "Timmy | AI-First Full-Stack Developer, Mobile App Developer, Content Creator",
     template: "%s | Timmy",
   },
   description:
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     siteName: "Timmy Portfolio",
     images: [
       {
-        url: `${BASE_URL}/og-image.png`,
+        url: `${BASE_URL}/timmy_pfp-modified.png`,
         width: 1200,
         height: 630,
         alt: "Timmy | AI Web & Mobile Developer",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     title: "Timmy | AI Web & Mobile Developer",
     description:
       "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
-    images: [`${BASE_URL}/og-image.png`],
+    images: [`${BASE_URL}/timmy_pfp-modified.png`],
   },
   robots: {
     index: true,
@@ -108,7 +108,7 @@ export default function RootLayout({
         <meta property="og:title" content="Timmy | Full Stack Dev, Mobile Developer, Writer" />
         <meta property="og:description" content="Full-stack AI developer building practical web and mobile products from concept to production." />
         <meta property="og:url" content={BASE_URL} />
-        <meta property="og:image" content={`${BASE_URL}/og-image.png`} />
+        <meta property="og:image" content={`${BASE_URL}/timmy_pfp-modified.png`} />
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />

@@ -354,7 +354,7 @@ export default function Web3Community() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/api/fetch-meta', {
+        const res = await fetch('https://timmy-portfolio-vzev.onrender.com/api/fetch-meta', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ urls: POSTS }),
@@ -378,7 +378,7 @@ export default function Web3Community() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/api/fetch-meta', {
+        const res = await fetch('https://timmy-portfolio-vzev.onrender.com/api/fetch-meta', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ urls: ARTICLES }),

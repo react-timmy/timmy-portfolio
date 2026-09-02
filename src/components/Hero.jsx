@@ -13,13 +13,13 @@ const PROOF = [
   { icon: "⬡", text: "FilmSort — offline-first Android app", color: "#a78bfa" },
   { icon: "◈", text: "Shipped production ready apps",        color: "#a78bfa" },
   { icon: "▶", text: "Client sites within requested time",   color: "#a78bfa" },
-  { icon: "✦", text: "Writer on X -> @_devTimmy",            color: "#a78bfa" },
+  { icon: "✦", text: "Ghost Writer on X -> @_devTimmy",            color: "#a78bfa" },
 ];
 
 const QUICK_STATS = [
   { value: "3+",  label: "Years",    color: "#a78bfa" },
   { value: "10+", label: "Projects", color: "#a78bfa" },
-  { value: "5★",  label: "Rated",    color: "#a78bfa" },
+  { value: "5★",  label: "Community",    color: "#a78bfa" },
   { value: "24h", label: "Response", color: "#a78bfa" },
 ];
 

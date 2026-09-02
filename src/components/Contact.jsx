@@ -6,8 +6,8 @@ const SOCIAL = [
   { label: "Email",        handle: "cs@gmail.com", href: "mailto:colesustain00@gmail.com", color: "#8b5cf6" },
 ];
 
-const PROJECT_TYPES = ["Web App", "Mobile App", "AI Integration", "Client Website", "Consulting / Review", "Collab / Open Source", "Other"];
-const BUDGET_RANGES = ["< $500", "$500 – $1,500", "$1,500 – $5,000", "$5,000+", "Let's discuss"];
+const PROJECT_TYPES = ["Web App", "Mobile App", "Website Update / Manager ", "Client Website", "Consulting / Review", "Collab / Open Source", "Google Services", "Other"];
+const BUDGET_RANGES = ["< $300", "$500 – $1,500", "$1,500 – $5,000", "$5,000+", "Let's discuss"];
 
 /* XLogo inline SVG */
 const XIcon = () => (

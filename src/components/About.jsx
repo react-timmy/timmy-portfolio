@@ -58,6 +58,62 @@ export default function About() {
           always works → build in private, ship in public.
         </blockquote>
 
+        <div style={{ marginTop: 32, display: "flex", gap: "16px" }}>
+          <a
+            href="https://docs.google.com/document/d/11YPc0iZDkAPnVsTcmnwcRGjGZD3MTgGq/edit?usp=sharing&ouid=116564858074555128815&rtpof=true&sd=true"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(255, 255, 255, 0.1)",
+              border: "1px solid rgba(255,255,255,0.1)",
+              color: "#ffffff",
+              padding: "10px 20px",
+              borderRadius: 6,
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+              transition: "background 0.2s ease",
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.15)")}
+            onMouseOut={(e) => (e.currentTarget.style.background = "rgba(255, 255, 255, 0.1)")}
+          >
+            <svg style={{ marginRight: 8 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+            View Resume
+          </a>
+          <a
+            href="/My_Resume.docx"
+            download="Cole Timmy's Resume.docx"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#ffffff",
+              color: "#000000",
+              padding: "10px 20px",
+              borderRadius: 6,
+              fontSize: 14,
+              fontWeight: 600,
+              textDecoration: "none",
+              transition: "opacity 0.2s ease",
+            }}
+            onMouseOver={(e) => (e.currentTarget.style.opacity = "0.8")}
+            onMouseOut={(e) => (e.currentTarget.style.opacity = "1")}
+          >
+            <svg style={{ marginRight: 8 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download Resume
+          </a>
+        </div>
+
       </div>
     </section>
   );

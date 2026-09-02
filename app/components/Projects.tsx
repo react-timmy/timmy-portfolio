@@ -321,6 +321,164 @@ export default function Projects() {
               </article>
             );
           })}
+
+          {/* Credentials Card */}
+          <article
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              borderRadius: 16,
+              overflow: "hidden",
+              background: "#0d0d0d",
+              border: "1px solid rgba(255,255,255,0.08)",
+              transition: "border-color 200ms ease, transform 200ms ease, box-shadow 200ms ease",
+              animationDelay: `${featuredProjects.length * 60}ms`,
+              minWidth: "calc(100vw - 40px)",
+            }}
+            onMouseEnter={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.borderColor = `rgba(180, 0, 235, 0.4)`;
+              el.style.transform = "translateY(-3px)";
+              el.style.boxShadow = `0 20px 60px rgba(0,0,0,0.7), 0 0 40px rgba(180, 0, 235, 0.15)`;
+            }}
+            onMouseLeave={e => {
+              const el = e.currentTarget as HTMLElement;
+              el.style.borderColor = "rgba(255,255,255,0.08)";
+              el.style.transform = "translateY(0)";
+              el.style.boxShadow = "none";
+            }}
+          >
+            {/* ── Cover ───────────────────────────────────────────── */}
+            <div style={{ position: "relative", width: "100%", paddingTop: "52%", background: "linear-gradient(135deg, #1f0033 0%, #0d0019 100%)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/cole-sustain-work-smarter-with-ai-badge.png"
+                alt="Work Smarter with AI Canva Badge"
+                style={{
+                  position: "absolute",
+                  height: "80%",
+                  width: "auto",
+                  objectFit: "contain",
+                  top: "10%",
+                  left: "50%",
+                  transform: "translateX(-50%)"
+                }}
+              />
+
+              <div style={{
+                position: "absolute", bottom: 0, left: 0, right: 0, height: "60%",
+                background: "linear-gradient(to bottom, transparent, #0d0d0d)",
+              }} />
+
+              {/* Category chip */}
+              <div style={{
+                position: "absolute", bottom: 10, left: 12,
+                display: "inline-flex", alignItems: "center", gap: 5,
+                padding: "3px 9px",
+                borderRadius: 6,
+                background: "rgba(180, 0, 235, 0.1)",
+                border: `1px solid rgba(180, 0, 235, 0.3)`,
+              }}>
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#b400eb", flexShrink: 0, display: "block" }} />
+                <span style={{ fontSize: 9, fontWeight: 800, color: "#b400eb", letterSpacing: 0.8, textTransform: "uppercase" }}>
+                  Credentials
+                </span>
+              </div>
+
+              <div style={{ position: "absolute", bottom: 10, right: 12 }}>
+                <span style={{ fontSize: 10, fontWeight: 700, color: "rgba(255,255,255,0.3)", letterSpacing: 0.5 }}>Present</span>
+              </div>
+            </div>
+
+            {/* ── Body ────────────────────────────────────────────── */}
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "14px 14px 12px", gap: 10 }}>
+              <div>
+                <h3 style={{
+                  fontSize: 13,
+                  fontWeight: 800,
+                  color: "#ffffff",
+                  letterSpacing: -0.2,
+                  lineHeight: 1.2,
+                  marginBottom: 3,
+                }}>
+                  Certifications & Resume
+                </h3>
+                <p style={{ fontSize: 10, fontWeight: 500, color: "#52525b", letterSpacing: 0.1, lineHeight: 1.3 }}>
+                  My qualifications and professional experience
+                </p>
+              </div>
+
+              <p style={{ fontSize: 11, lineHeight: 1.6, color: "#71717a", flex: 1 }}>
+                View my verified Canva certification and download my latest resume to see my full work history and skills.
+              </p>
+
+              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                <span
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    letterSpacing: 0.3,
+                    textTransform: "uppercase",
+                    color: "#71717a",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.07)",
+                    borderRadius: 5,
+                    padding: "2px 7px",
+                  }}
+                >
+                  AI Tools
+                </span>
+              </div>
+
+              <div style={{ height: 1, background: "rgba(255,255,255,0.06)" }} />
+
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <a
+                  href="/cole-sustain-work-smarter-with-ai-certificate.pdf"
+                  download="Cole_Timmy_Certificate.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    fontSize: 9,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: 0.5,
+                    color: "#b400eb",
+                    textDecoration: "none",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+                >
+                  Download Certificate
+                </a>
+
+                <a
+                  href="/cole-sustain-work-smarter-with-ai-certificate.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
+                    padding: "5px 12px",
+                    borderRadius: 7,
+                    background: "#ffffff",
+                    color: "#000000",
+                    fontSize: 10,
+                    fontWeight: 800,
+                    textDecoration: "none",
+                    letterSpacing: 0.2,
+                    transition: "opacity 150ms",
+                  }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.85"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
+                >
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                  View Certificate
+                </a>
+              </div>
+            </div>
+          </article>
           </div>
         </div>
 

@@ -372,7 +372,7 @@ export default function Projects() {
               }}>
                 <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#b400eb", flexShrink: 0, display: "block" }} />
                 <span style={{ fontSize: 9, fontWeight: 800, color: "#b400eb", letterSpacing: 0.8, textTransform: "uppercase" }}>
-                  Credentials
+                  Certificate
                 </span>
               </div>
 
@@ -392,7 +392,7 @@ export default function Projects() {
                   lineHeight: 1.2,
                   marginBottom: 3,
                 }}>
-                  Certifications & Resume
+                  Canva Design School
                 </h3>
                 <p style={{ fontSize: 10, fontWeight: 500, color: "#52525b", letterSpacing: 0.1, lineHeight: 1.3 }}>
                   My qualifications and professional experience

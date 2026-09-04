@@ -293,11 +293,12 @@ export default function Hero() {
 
         {/* ── Headline ─────────────────────────────────────────────────── */}
         <h1 className="anim-fade-up d-2" style={{
-          color: "#ffffff", lineHeight: 1.0,
+          color: "#ffffff", lineHeight: 1.05,
           marginBottom: 12,
-          fontSize: "clamp(2.6rem, 8vw, 4.25rem)",
+          fontSize: "clamp(2rem, 6.5vw, 3.75rem)",
+          whiteSpace: "nowrap",
         }}>
-          I&apos;m Cole Sustain
+          I&apos;m Cole Sustain Timmy
         </h1>
 
         {/* ── Animated role ─────────────────────────────────────────────── */}

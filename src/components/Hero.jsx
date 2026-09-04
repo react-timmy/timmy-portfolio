@@ -19,7 +19,7 @@ const PROOF = [
 const QUICK_STATS = [
   { value: "2+",  label: "Years",    color: "#a78bfa" },
   { value: "10+", label: "Projects", color: "#a78bfa" },
-  { value: "5★",  label: "Reviews",  color: "#a78bfa" },
+  { value: "2k+", label: "Community", color: "#a78bfa" },
   { value: "24h", label: "Response", color: "#a78bfa" },
 ];
 
@@ -297,7 +297,7 @@ export default function Hero() {
           marginBottom: 12,
           fontSize: "clamp(2.6rem, 8vw, 4.25rem)",
         }}>
-          I&apos;m Cole Sustain Timmy
+          I&apos;m Cole Sustain
         </h1>
 
         {/* ── Animated role ─────────────────────────────────────────────── */}

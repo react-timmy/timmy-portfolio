@@ -17,9 +17,9 @@ const PROOF = [
 ];
 
 const QUICK_STATS = [
-  { value: "3+",  label: "Years",    color: "#a78bfa" },
+  { value: "2+",  label: "Years",    color: "#a78bfa" },
   { value: "10+", label: "Projects", color: "#a78bfa" },
-  { value: "5★",  label: "Community",    color: "#a78bfa" },
+  { value: "5★",  label: "Reviews",  color: "#a78bfa" },
   { value: "24h", label: "Response", color: "#a78bfa" },
 ];
 
@@ -247,7 +247,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Handle only (Available pill removed) ────────────────────── */}
+        {/* ── Handle + LinkedIn ────────────────────────────────────── */}
         <div className="anim-fade-up d-1" style={{
           display: "flex", alignItems: "center", gap: 10,
           marginBottom: 20, flexWrap: "wrap", justifyContent: "center",
@@ -270,6 +270,25 @@ export default function Hero() {
             </svg>
             @_devTimmy
           </a>
+          <span style={{ width: 1, height: 12, background: "#27272a" }} />
+          <a
+            href="https://www.linkedin.com/in/devtimmy"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 6,
+              fontSize: 12, fontWeight: 700, color: "#71717a",
+              textDecoration: "none", letterSpacing: 0.2,
+              transition: "color 150ms ease",
+            }}
+            onMouseEnter={e => { (e.currentTarget).style.color = "#ffffff"; }}
+            onMouseLeave={e => { (e.currentTarget).style.color = "#71717a"; }}
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+            LinkedIn
+          </a>
         </div>
 
         {/* ── Headline ─────────────────────────────────────────────────── */}
@@ -278,7 +297,7 @@ export default function Hero() {
           marginBottom: 12,
           fontSize: "clamp(2.6rem, 8vw, 4.25rem)",
         }}>
-          I&apos;m Cole Timmy
+          I&apos;m Cole Sustain Timmy
         </h1>
 
         {/* ── Animated role ─────────────────────────────────────────────── */}
@@ -320,7 +339,7 @@ export default function Hero() {
           </a>
           <a href="#contact" className="btn-glass">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Get in touch
+            Open to roles
           </a>
         </div>
 

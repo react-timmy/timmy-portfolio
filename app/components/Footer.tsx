@@ -20,7 +20,7 @@ const NAV_COLS = [
       { label: "X / Twitter", href: "https://x.com/_devTimmy"          },
       { label: "GitHub",      href: "https://github.com/react-timmy"   },
       { label: "LinkedIn",    href: "https://www.linkedin.com/in/devtimmy/" },
-      { label: "Email",       href: "mailto:colesustain00@gmail.com"   },
+      { label: "Email",       href: "mailto:solodevtimmy@gmail.com"   },
     ],
   },
 ];
@@ -39,7 +39,7 @@ const SOCIAL = [
     svg: <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0H5C2.24 0 0 2.24 0 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5V5c0-2.76-2.24-5-5-5zM7.5 19h-2.5v-9h2.5v9zM6.25 8.71c-.8 0-1.45-.65-1.45-1.46 0-.8.65-1.45 1.45-1.45s1.45.65 1.45 1.45c0 .81-.65 1.46-1.45 1.46zM21 19h-2.5v-4.5c0-1.07-.02-2.44-1.49-2.44-1.49 0-1.72 1.16-1.72 2.36V19H13v-9h2.4v1.23h.03c.33-.63 1.13-1.29 2.33-1.29 2.49 0 2.95 1.64 2.95 3.77V19z"/></svg>,
   },
   {
-    href: "mailto:colesustain00@gmail.com", label: "Email",
+    href: "mailto:solodevtimmy@gmail.com", label: "Email",
     svg: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
   },
 ];

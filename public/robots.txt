@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://devtimmy.vercel.app/sitemap.xml
+Sitemap: https://solo-devtimmy.vercel.app/sitemap.xml

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const SITE_URL = import.meta.env.VITE_SITE_URL || "https://devtimmy.vercel.app";
+const SITE_URL = import.meta.env.VITE_SITE_URL || "https://solo-devtimmy.vercel.app";
 const DESCRIPTION =
   "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator";
 
@@ -15,17 +15,17 @@ function setMeta(selector, attrs) {
 
 export default function DocumentMeta() {
   useEffect(() => {
-    document.title = "Timmy | AI-First Full-Stack Developer, Mobile Developer, Content Creator";
+    document.title = "Cole Sustain Timmy | AI-first FullStack Developer";
 
     setMeta('meta[name="description"]', { name: "description", content: DESCRIPTION });
     setMeta('meta[property="og:url"]', { property: "og:url", content: SITE_URL });
-    setMeta('meta[property="og:title"]', { property: "og:title", content: "Timmy | AI Web & Mobile Developer, Writer" });
+    setMeta('meta[property="og:title"]', { property: "og:title", content: "Cole Sustain Timmy | AI-first FullStack Developer" });
     setMeta('meta[property="og:description"]', { property: "og:description", content: DESCRIPTION });
-    setMeta('meta[property="og:site_name"]', { property: "og:site_name", content: "Timmy Portfolio" });
-    setMeta('meta[property="og:image"]', { property: "og:image", content: `${SITE_URL}/og-image.png` });
-    setMeta('meta[name="twitter:title"]', { name: "twitter:title", content: "Timmy | AI Web & Mobile Developer" });
+    setMeta('meta[property="og:site_name"]', { property: "og:site_name", content: "Cole Sustain Timmy | AI-first FullStack Developer" });
+    setMeta('meta[property="og:image"]', { property: "og:image", content: `${SITE_URL}/timmy_pfp-modified.png` });
+    setMeta('meta[name="twitter:title"]', { name: "twitter:title", content: "Cole Sustain Timmy | AI-first FullStack Developer" });
     setMeta('meta[name="twitter:description"]', { name: "twitter:description", content: DESCRIPTION });
-    setMeta('meta[name="twitter:image"]', { name: "twitter:image", content: `${SITE_URL}/og-image.png` });
+    setMeta('meta[name="twitter:image"]', { name: "twitter:image", content: `${SITE_URL}/timmy_pfp-modified.png` });
 
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (!canonical) {
@@ -45,10 +45,10 @@ export default function DocumentMeta() {
     structuredData.textContent = JSON.stringify({
       "@context": "https://schema.org",
       "@type": "Person",
-      name: "Timmy",
+      name: "Cole Sustain Timmy",
       alternateName: ["dev timmy", "devTimmy", "Timmy"],
       url: SITE_URL,
-      jobTitle: "Full-stack AI Developer",
+      jobTitle: "AI-first FullStack Developer",
       sameAs: [
         "https://x.com/_devTimmy",
         "https://github.com/devtimmy",

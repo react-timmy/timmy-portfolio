@@ -173,8 +173,8 @@ export default function FilmSortFeature() {
               </a>
             </p>
             <div style={{ display: "flex", gap: 10 }}>
-              <a href="#contact" className="btn-red" style={{ fontSize: 12 }}>
-                Request case study
+              <a href="/filmsort-case-study" className="btn-red" style={{ fontSize: 12 }}>
+                Read Case Study
               </a>
               <a href="#projects" className="btn-glass" style={{ fontSize: 12 }}>
                 All projects

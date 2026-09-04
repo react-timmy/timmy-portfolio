@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm:dev:api\" \"npm:dev:web\"",
-"dev:web": "vite --host",
+    "dev:web": "vite --host",
     "dev:api": "node --watch server/index.js",
     "build": "vite build",
+    "postbuild": "node scripts/ping-sitemap.mjs",
     "preview": "vite preview",
     "start": "npm run preview",
     "server": "node server/index.js",

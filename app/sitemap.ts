@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://devtimmy.vercel.app";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://solo-devtimmy.vercel.app";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -11,22 +11,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${BASE_URL}/#projects`,
+      url: `${BASE_URL}/filmsort-case-study`,
       lastModified: new Date(),
       changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${BASE_URL}/#about`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.7,
-    },
-    {
-      url: `${BASE_URL}/#contact`,
-      lastModified: new Date(),
-      changeFrequency: "yearly",
-      priority: 0.6,
+      priority: 0.8,
     },
   ];
 }

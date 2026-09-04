@@ -1,0 +1,24 @@
+# Cole Sustain Timmy — AI-first FullStack Developer
+
+> Personal portfolio and case studies for Cole Sustain Timmy (devTimmy), a full-stack developer building practical web and mobile applications with AI.
+
+## About
+
+Cole Sustain Timmy is an AI-first full-stack developer based in Nigeria. He builds production-ready web and mobile apps using Next.js, React Native, TypeScript, and AI tooling.
+
+- Twitter/X: https://x.com/_devTimmy
+- GitHub: https://github.com/devtimmy
+- LinkedIn: https://www.linkedin.com/in/devtimmy
+
+## Projects
+
+### FilmSort
+An offline-first Android media organizer app. Built with React Native, featuring a local video player, barcode scanner, multi-profile support, and watch-party functionality.
+- Case study: https://solo-devtimmy.vercel.app/filmsort-case-study
+
+## Skills
+
+- Languages: TypeScript, JavaScript, Python
+- Frontend: Next.js, React, React Native, Tailwind CSS
+- Backend: Node.js, Express
+- Tools: Expo, EAS Build, Git, Vercel

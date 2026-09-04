@@ -26,12 +26,13 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "Timmy | AI-First Full-Stack Developer, Mobile App Developer, Content Creator",
-    template: "%s | Timmy",
+    default: "Cole Sustain Timmy | AI-first FullStack Developer",
+    template: "%s | Cole Sustain Timmy | AI-first FullStack Developer",
   },
   description:
     "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
   keywords: [
+    "Cole Sustain Timmy",
     "full-stack developer",
     "AI developer",
     "React Native developer",
@@ -42,8 +43,8 @@ export const metadata: Metadata = {
     "devTimmy",
     "_devTimmy",
   ],
-  authors: [{ name: "Timmy", url: "https://x.com/_devTimmy" }],
-  creator: "Timmy",
+  authors: [{ name: "Cole Sustain Timmy", url: "https://x.com/_devTimmy" }],
+  creator: "Cole Sustain Timmy",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
@@ -52,16 +53,16 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: BASE_URL,
-    title: "Timmy | AI Web & Mobile Developer, Writer",
+    title: "Cole Sustain Timmy | AI-first FullStack Developer",
     description:
       "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
-    siteName: "Timmy Portfolio",
+    siteName: "Cole Sustain Timmy | AI-first FullStack Developer",
     images: [
       {
         url: `${BASE_URL}/timmy_pfp-modified.png`,
         width: 1200,
         height: 630,
-        alt: "Timmy | AI Web & Mobile Developer",
+        alt: "Cole Sustain Timmy | AI-first FullStack Developer",
       },
     ],
   },
@@ -69,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@_devTimmy",
     creator: "@_devTimmy",
-    title: "Timmy | AI Web & Mobile Developer",
+    title: "Cole Sustain Timmy | AI-first FullStack Developer",
     description:
       "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
     images: [`${BASE_URL}/timmy_pfp-modified.png`],
@@ -98,14 +99,14 @@ export default function RootLayout({
       <head>
         <meta name="google-site-verification" content="Z1dN3MwWGovirMrzNwY60G3ZTP6hdfBlDL5zIdtyeXs" />
         <meta name="description" content="I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator" />
-        <meta name="keywords" content="Timmy, dev timmy, devTimmy, full-stack developer, AI developer, Next.js, React Native, TypeScript, portfolio" />
-        <meta name="author" content="Timmy" />
+        <meta name="keywords" content="Cole Sustain Timmy, dev timmy, devTimmy, full-stack developer, AI developer, Next.js, React Native, TypeScript, portfolio" />
+        <meta name="author" content="Cole Sustain Timmy" />
         <link rel="canonical" href={BASE_URL} />
         <link rel="icon" href="/favicon.ico" />
 
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Timmy | Full Stack Dev, Mobile Developer, Writer" />
+        <meta property="og:title" content="Cole Sustain Timmy | AI-first FullStack Developer" />
         <meta property="og:description" content="Full-stack AI developer building practical web and mobile products from concept to production." />
         <meta property="og:url" content={BASE_URL} />
         <meta property="og:image" content={`${BASE_URL}/timmy_pfp-modified.png`} />
@@ -121,10 +122,10 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              name: "Timmy",
+              name: "Cole Sustain Timmy",
               alternateName: ["dev timmy", "devTimmy", "Timmy"],
               url: BASE_URL,
-              jobTitle: "Full-stack AI Developer",
+              jobTitle: "AI-first FullStack Developer",
               sameAs: [
                 "https://x.com/_devTimmy",
                 "https://github.com/devtimmy",

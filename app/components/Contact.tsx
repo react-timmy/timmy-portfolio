@@ -5,11 +5,11 @@ import { useState } from "react";
 const SOCIAL = [
   { label: "X / Twitter", handle: "@_devTimmy",           href: "https://x.com/_devTimmy",          color: "#ffffff" },
   { label: "GitHub",       handle: "@react-timmy",          href: "https://github.com/react-timmy",   color: "#a1a1aa" },
-  { label: "Email",        handle: "cs@gmail.com", href: "mailto:colesustain00@gmail.com", color: "#8b5cf6" },
+  { label: "LinkedIn",     handle: "Cole Timmy",          href: "https://linkedin.com/in/devtimmy", color: "#0077b5" },
+  { label: "Email",        handle: "solodevtimmy@gmail.com", href: "mailto:solodevtimmy@gmail.com", color: "#8b5cf6" },
 ];
 
-const PROJECT_TYPES = ["Web App", "Mobile App", "Website Update / Manager ", "Client Website", "Consulting / Review", "Collab / Open Source", "Let's Build Something Together"];
-const BUDGET_RANGES = ["< $500", "$500 – $1,500", "$1,500 – $5,000", "$5,000+", "Let's discuss"];
+const PROJECT_TYPES = ["Full-Time Role", "Contract", "Open Source Collaboration", "Let's build something..."];
 
 /* XLogo inline SVG */
 const XIcon = () => (
@@ -22,13 +22,18 @@ const GithubIcon = () => (
     <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
   </svg>
 );
+const LinkedInIcon = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+  </svg>
+);
 const EmailIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
   </svg>
 );
 
-const ICONS: Record<string, React.FC> = { "X / Twitter": XIcon, GitHub: GithubIcon, Email: EmailIcon };
+const ICONS: Record<string, React.FC> = { "X / Twitter": XIcon, GitHub: GithubIcon, LinkedIn: LinkedInIcon, Email: EmailIcon };
 
 const fieldStyle = {
   width: "100%",
@@ -47,7 +52,6 @@ export default function Contact() {
   const [name,    setName]    = useState("");
   const [email,   setEmail]   = useState("");
   const [type,    setType]    = useState("");
-  const [budget,  setBudget]  = useState("");
   const [message, setMessage] = useState("");
   const [sent,    setSent]    = useState(false);
   const [focused, setFocused] = useState<string | null>(null);
@@ -61,11 +65,10 @@ export default function Contact() {
     const body = encodeURIComponent([
       `Message: ${message}`,
       "",
-      `Project type: ${type || "—"}`,
-      `Budget: ${budget || "—"}`,
+      `Inquiry type: ${type || "—"}`,
       `From: ${name} <${email}>`,
     ].join("\n"));
-    window.location.href = `mailto:colesustain00@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:solodevtimmy@gmail.com?subject=${subject}&body=${body}`;
     setSent(true);
   }
 
@@ -76,10 +79,10 @@ export default function Contact() {
         {/* Header */}
         <div style={{ marginBottom: 48 }}>
           <span className="section-label">Contact</span>
-          <h2 style={{ color: "#ffffff" }}>Let&apos;s work together</h2>
+          <h2 style={{ color: "#ffffff" }}>Let's talk</h2>
           {/* shown on mobile only — desktop version lives in the sidebar */}
           <p className="contact-header-desc" style={{ marginTop: 10, maxWidth: 480, color: "#a1a1aa", fontSize: 16 }}>
-            I read every message and reply within 24 hours. Got a project, collab, or question? 
+            I read every message and reply within 24 hours. Got an opportunity, collab, or question? 
           </p>
         </div>
 
@@ -88,7 +91,7 @@ export default function Contact() {
           {/* ── Left sidebar — only visible on desktop ── */}
           <div className="contact-sidebar">
             <p style={{ fontSize: 15, lineHeight: 1.75, color: "#a1a1aa", marginBottom: 32 }}>
-              I read every message and reply within 24 hours. Got a project, collab, or question? 
+              I read every message and reply within 24 hours. Got an opportunity, collab, or question? 
             </p>
 
             {/* Social links stacked */}
@@ -222,36 +225,20 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Project type + Budget — like LibraryView Sort/Filter row */}
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                {/* Inquiry type */}
+                <div className="grid grid-cols-1 gap-4">
                   <div>
-                    <label style={{ display: "block", fontSize: 11, fontWeight: 800, color: "#52525b", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 7 }}>Project type</label>
+                    <label style={{ display: "block", fontSize: 11, fontWeight: 800, color: "#52525b", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 7 }}>Inquiry type</label>
                     <div style={{ position: "relative" }}>
                       <select
                         value={type}
                         onChange={e => setType(e.target.value)}
                         onFocus={() => setFocused("type")}
                         onBlur={() => setFocused(null)}
-                        style={{ ...fieldStyle, borderColor: getBorderColor("type"), appearance: "none", cursor: "pointer" }}
+                        style={{ ...fieldStyle, borderColor: getBorderColor("type"), appearance: "none", cursor: "pointer", background: "#0a0a0a", color: type ? "#ffffff" : "#52525b" }}
                       >
-                        <option value="" disabled>Select type…</option>
-                        {PROJECT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
-                      </select>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3f3f46" strokeWidth="2.5" style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}><path d="M19 9l-7 7-7-7"/></svg>
-                    </div>
-                  </div>
-                  <div>
-                    <label style={{ display: "block", fontSize: 11, fontWeight: 800, color: "#52525b", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 7 }}>Budget</label>
-                    <div style={{ position: "relative" }}>
-                      <select
-                        value={budget}
-                        onChange={e => setBudget(e.target.value)}
-                        onFocus={() => setFocused("budget")}
-                        onBlur={() => setFocused(null)}
-                        style={{ ...fieldStyle, borderColor: getBorderColor("budget"), appearance: "none", cursor: "pointer" }}
-                      >
-                        <option value="" disabled>Select range…</option>
-                        {BUDGET_RANGES.map(b => <option key={b} value={b}>{b}</option>)}
+                        <option value="" disabled style={{ background: "#0a0a0a", color: "#52525b" }}>Select type…</option>
+                        {PROJECT_TYPES.map(t => <option key={t} value={t} style={{ background: "#0a0a0a", color: "#ffffff" }}>{t}</option>)}
                       </select>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3f3f46" strokeWidth="2.5" style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", pointerEvents: "none" }}><path d="M19 9l-7 7-7-7"/></svg>
                     </div>
@@ -304,7 +291,7 @@ export default function Contact() {
                             flexDirection: "column",
                             alignItems: "center",
                             gap: 8,
-                            padding: "14px 10px",
+                            padding: "12px 10px",
                             background: "rgba(255,255,255,0.03)",
                             border: "1px solid rgba(255,255,255,0.07)",
                             borderRadius: 10,
@@ -333,10 +320,6 @@ export default function Contact() {
                             color,
                           }}>
                             {Icon && <Icon />}
-                          </div>
-                          <div style={{ textAlign: "center", minWidth: 0, width: "100%" }}>
-                            <p style={{ fontSize: 11, fontWeight: 800, color: "#ffffff", letterSpacing: -0.1 }}>{label}</p>
-                            <p style={{ fontSize: 10, color: "#52525b", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{handle}</p>
                           </div>
                         </a>
                       );

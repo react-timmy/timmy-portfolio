@@ -12,8 +12,8 @@ const ROLES = [
 const PROOF = [
   { icon: "⬡", text: "FilmSort — offline-first Android app", color: "#a78bfa" },
   { icon: "◈", text: "Shipped production ready apps",        color: "#a78bfa" },
-  { icon: "▶", text: "Client sites within requested time",   color: "#a78bfa" },
-  { icon: "✦", text: "Ghost Writer on X -> @_devTimmy",            color: "#a78bfa" },
+  { icon: "▶", text: "Scalable & maintainable code",         color: "#a78bfa" },
+  { icon: "✦", text: "Writer on X -> @_devTimmy",            color: "#a78bfa" },
 ];
 
 const QUICK_STATS = [
@@ -320,7 +320,7 @@ export default function Hero() {
           </a>
           <a href="#contact" className="btn-glass">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Let&apos;s build something
+            Get in touch
           </a>
         </div>
 

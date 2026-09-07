@@ -8,6 +8,7 @@ const CATEGORY = {
   "client-work": { color: "#a78bfa", bg: "rgba(139,92,246,0.10)", label: "Client"     },
   community:     { color: "#a78bfa", bg: "rgba(139,92,246,0.10)", label: "Community"  },
   experiment:    { color: "#a78bfa", bg: "rgba(139,92,246,0.10)", label: "Experiment" },
+  certificate:   { color: "#d97757", bg: "rgba(217,119,87,0.10)", label: "Certificate" },
 };
 
 function getCat(category) {
@@ -23,6 +24,7 @@ const COVER_IMAGES = {
     "/blessnetworkpj_bannercarousel1.jpg",
     "/blessnetworkbannercarousel2.jpg",
   ],
+  "anthropic-certificate": "/anthropic-certificate.jpg",
 };
 
 /* Fallback gradient for projects without a photo */
@@ -94,7 +96,7 @@ export default function Projects() {
 
         {/* Header */}
         <div style={{ marginBottom: 40 }}>
-          <span className="section-label">Work</span>
+          <span className="section-label">WORK & CERTIFICATES</span>
           <h2 style={{ color: "#ffffff", marginBottom: 8 }}>Featured Projects</h2>
           <p style={{ color: "#71717a", fontSize: 15, maxWidth: 420 }}>
             Projects and products I built and shipped.
@@ -156,7 +158,14 @@ export default function Projects() {
                         <img
                           src={coverImgs[0]}
                           alt={p.title}
-                          style={{
+                          style={p.category === "certificate" ? {
+                            position: "absolute", inset: 0,
+                            width: "100%", height: "100%",
+                            objectFit: "cover",
+                            transform: "scale(1.15)",
+                            transformOrigin: "center center",
+                            display: "block",
+                          } : {
                             position: "absolute", inset: 0,
                             width: "100%", height: "100%",
                             objectFit: "cover",
@@ -373,10 +382,10 @@ export default function Projects() {
                 alt="Work Smarter with AI Canva Badge"
                 style={{
                   position: "absolute",
-                  height: "80%",
+                  height: "95%",
                   width: "auto",
                   objectFit: "contain",
-                  top: "10%",
+                  top: "2.5%",
                   left: "50%",
                   transform: "translateX(-50%)"
                 }}

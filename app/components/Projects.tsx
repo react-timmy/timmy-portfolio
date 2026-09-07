@@ -104,7 +104,7 @@ export default function Projects() {
 
         {/* Header */}
         <div style={{ marginBottom: 40 }}>
-          <span className="section-label">Work</span>
+          <span className="section-label">WORK & CERTIFICATES</span>
           <h2 style={{ color: "#ffffff", marginBottom: 8 }}>Featured Projects</h2>
           <p style={{ color: "#71717a", fontSize: 15, maxWidth: 420 }}>
             Projects and products I built and shipped.
@@ -164,7 +164,14 @@ export default function Projects() {
                         <img
                           src={coverImgs[0]}
                           alt={p.title}
-                          style={{
+                          style={p.category === "certificate" ? {
+                            position: "absolute", inset: 0,
+                            width: "100%", height: "100%",
+                            objectFit: "cover",
+                            transform: "scale(1.15)",
+                            transformOrigin: "center center",
+                            display: "block",
+                          } : {
                             position: "absolute", inset: 0,
                             width: "100%", height: "100%",
                             objectFit: "cover",
@@ -376,16 +383,15 @@ export default function Projects() {
           >
             {/* ── Cover ───────────────────────────────────────────── */}
             <div style={{ position: "relative", width: "100%", paddingTop: "52%", background: "linear-gradient(135deg, #1f0033 0%, #0d0019 100%)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/cole-sustain-work-smarter-with-ai-badge.png"
                 alt="Work Smarter with AI Canva Badge"
                 style={{
                   position: "absolute",
-                  height: "80%",
+                  height: "95%",
                   width: "auto",
                   objectFit: "contain",
-                  top: "10%",
+                  top: "2.5%",
                   left: "50%",
                   transform: "translateX(-50%)"
                 }}

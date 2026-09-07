@@ -102,6 +102,26 @@ export const projects = [
     liveUrl:       "",
     githubUrl:     "",
   },
+  {
+    id:            "anthropic-certificate",
+    slug:          "anthropic-certificate",
+    title:         "AI Fluency Anthropic Academy Certificate",
+    subtitle:      "Anthropic Academy",
+    summary:
+      "Certificate of completion for AI Fluency from Anthropic Academy.",
+    category:      "certificate",
+    status:        "published",
+    featured:      true,
+    priority:      5,
+    tags:          ["Certificate", "AI", "Anthropic"],
+    techStack:     ["AI Fluency"],
+    role:          "Learner",
+    year:          2026,
+    coverImageUrl: "/anthropic-certificate.jpg",
+    galleryImageUrls: [],
+    liveUrl:       "https://academy.claude.com/verify/62b5693107478f16727e961a30116290",
+    githubUrl:     "",
+  },
 ];
 
 export const featuredProjects = projects.filter((p) => p.featured && p.status === "published").sort((a, b) => a.priority - b.priority);

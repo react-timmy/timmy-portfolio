@@ -298,7 +298,7 @@ export default function Hero() {
           fontSize: "clamp(2rem, 6.5vw, 3.75rem)",
           whiteSpace: "nowrap",
         }}>
-          I&apos;m Cole Sustain Timmy
+          I&apos;m Cole Sustain
         </h1>
 
         {/* ── Animated role ─────────────────────────────────────────────── */}

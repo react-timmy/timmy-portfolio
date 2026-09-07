@@ -60,7 +60,7 @@ export default function About() {
 
         <div style={{ marginTop: 32, display: "flex", gap: "16px" }}>
           <a
-            href="https://docs.google.com/document/d/11YPc0iZDkAPnVsTcmnwcRGjGZD3MTgGq/edit?usp=sharing&ouid=116564858074555128815&rtpof=true&sd=true"
+            href="https://docs.google.com/document/d/1dyWITL2c0jfq5RnDQH7HyO1VjWIqD2udu9sZtvLrTps/edit?usp=drivesdk"
             target="_blank"
             rel="noreferrer"
             style={{
@@ -87,8 +87,8 @@ export default function About() {
             View Resume
           </a>
           <a
-            href="/My_Resume.docx"
-            download="Cole Timmy's Resume.docx"
+            href="/Cole_Sustain.docx"
+            download="Cole_Sustain.docx"
             style={{
               display: "inline-flex",
               alignItems: "center",

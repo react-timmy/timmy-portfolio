@@ -251,7 +251,7 @@ export default function Hero() {
           marginBottom: 12,
           fontSize: "clamp(2.6rem, 8vw, 4.25rem)",
         }}>
-          I&apos;m Cole Timmy
+          I&apos;m Cole
         </h1>
 
         {/* ── Animated role ─────────────────────────────────────────────── */}

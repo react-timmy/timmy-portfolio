@@ -17,14 +17,19 @@ function getCat(category) {
 
 /* Projects that have a real cover photo — render as actual <img> */
 const COVER_IMAGES = {
-  filmsort:        "/filmsortpj_banner.png",
-  shazam:          "/shazambanner.png",
-  buildoors:       "/buildoorsbanner.png",
+  filmsort:            "/filmsortpj_banner.png",
+  shazam:              "/shazambanner.png",
+  buildoors:           "/buildoorsbanner.png",
   "bless-network": [
     "/blessnetworkpj_bannercarousel1.jpg",
     "/blessnetworkbannercarousel2.jpg",
   ],
   "anthropic-certificate": "/anthropic-certificate.jpg",
+};
+
+/* Projects that use a video cover instead of an image */
+const COVER_VIDEOS = {
+  "mamuda-beverages": "/pop-cola-video",
 };
 
 /* Fallback gradient for projects without a photo */
@@ -109,11 +114,12 @@ export default function Projects() {
           <div className="projects-grid">
           {featuredProjects.map((p, i) => {
             const cat = getCat(p.category);
-            const coverImgRaw = COVER_IMAGES[p.id];
+            const coverVideo = COVER_VIDEOS[p.id];
+            const coverImgRaw = coverVideo ? null : COVER_IMAGES[p.id];
             const coverImgs = coverImgRaw
               ? Array.isArray(coverImgRaw) ? coverImgRaw : [coverImgRaw]
               : null;
-            const coverBg = coverImgs
+            const coverBg = coverImgs || coverVideo
               ? "#0d0d0d"
               : (COVER_GRADIENTS[p.id] ?? "linear-gradient(135deg, #111 0%, #1c1c1c 100%)");
 
@@ -149,6 +155,23 @@ export default function Projects() {
               >
                 {/* ── Cover ───────────────────────────────────────────── */}
                 <div style={{ position: "relative", width: "100%", paddingTop: "52%", background: coverBg, overflow: "hidden" }}>
+
+                  {/* Autoplaying video cover */}
+                  {coverVideo && (
+                    <video
+                      src={coverVideo}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      style={{
+                        position: "absolute", inset: 0,
+                        width: "100%", height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                      }}
+                    />
+                  )}
 
                   {/* Real cover photo / carousel */}
                   {coverImgs && (

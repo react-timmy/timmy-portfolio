@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const SITE_URL = import.meta.env.VITE_SITE_URL || "https://solo-devtimmy.vercel.app";
 const DESCRIPTION =
-  "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator";
+  "I am an AI-First Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator";
 
 function setMeta(selector, attrs) {
   let el = document.head.querySelector(selector);
@@ -13,10 +13,25 @@ function setMeta(selector, attrs) {
   Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
 }
 
+function setLink(selector, attrs) {
+  let el = document.head.querySelector(selector);
+  if (!el) {
+    el = document.createElement("link");
+    document.head.appendChild(el);
+  }
+  Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+}
+
 export default function DocumentMeta() {
   useEffect(() => {
     document.title = "Cole Sustain Timmy | AI-first FullStack Developer";
 
+    setLink('link[rel="icon"][type="image/png"]', {
+      rel: "icon",
+      type: "image/png",
+      sizes: "320x320",
+      href: "/timmy_pfp-modified.png",
+    });
     setMeta('meta[name="description"]', { name: "description", content: DESCRIPTION });
     setMeta('meta[property="og:url"]', { property: "og:url", content: SITE_URL });
     setMeta('meta[property="og:title"]', { property: "og:title", content: "Cole Sustain Timmy | AI-first FullStack Developer" });

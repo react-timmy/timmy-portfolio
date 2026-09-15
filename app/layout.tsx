@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: "%s | Cole Sustain Timmy | AI-first FullStack Developer",
   },
   description:
-    "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
+    "I am an AI-First Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
   keywords: [
     "Cole Sustain Timmy",
     "full-stack developer",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     url: BASE_URL,
     title: "Cole Sustain Timmy | AI-first FullStack Developer",
     description:
-      "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
+      "I am an AI-First Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
     siteName: "Cole Sustain Timmy | AI-first FullStack Developer",
     images: [
       {
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
     creator: "@_devTimmy",
     title: "Cole Sustain Timmy | AI-first FullStack Developer",
     description:
-      "I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
+      "I am an AI-First Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator",
     images: [`${BASE_URL}/timmy_pfp-modified.png`],
   },
   robots: {
@@ -98,7 +98,7 @@ export default function RootLayout({
     >
       <head>
         <meta name="google-site-verification" content="Z1dN3MwWGovirMrzNwY60G3ZTP6hdfBlDL5zIdtyeXs" />
-        <meta name="description" content="I am an Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator" />
+        <meta name="description" content="I am an AI-First Full-Stack developer that builds practical web and mobile app ideas from concept to production. Prompt-to-Stack Builder, Mobile Developer, and Content Creator" />
         <meta name="keywords" content="Cole Sustain Timmy, dev timmy, devTimmy, full-stack developer, AI developer, Next.js, React Native, TypeScript, portfolio" />
         <meta name="author" content="Cole Sustain Timmy" />
         <link rel="canonical" href={BASE_URL} />

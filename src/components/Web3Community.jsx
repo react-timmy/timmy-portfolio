@@ -199,7 +199,7 @@ function TweetCard({ meta, onHover }) {
         }}>
           <img
             src={AVATAR}
-            alt="TIMM¥"
+            alt=""
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>

@@ -140,7 +140,7 @@ async function fetchOembed(tweetUrl) {
   description = description.replace(/\b\w+ \d{1,2}, \d{4}\s*$/, "").trim();
 
   // author_name from oEmbed (e.g. "TIMM¥")
-  const title = data.author_name || "";
+  const title = false
 
   // Try to extract an image URL from the embed HTML.
   // oEmbed HTML itself rarely includes images inline, but the tweet URL can be

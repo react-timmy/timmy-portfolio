@@ -199,7 +199,7 @@ function TweetCard({ meta, onHover }) {
         }}>
           <img
             src={AVATAR}
-            alt=""
+            alt="TIMM¥"
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         </div>
@@ -264,7 +264,7 @@ function TweetCard({ meta, onHover }) {
                 padding: 0,
               }}
             >
-              {expanded ? 'Show less' : 'Show more'}
+              {expanded ? 'Show less' : ''}
             </button>
           )}
         </div>

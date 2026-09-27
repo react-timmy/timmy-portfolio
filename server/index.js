@@ -90,115 +90,103 @@ function readJson(req) {
   });
 }
 
-function decodeHtmlEntities(text) {
-  return String(text || "")
-    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCharCode(parseInt(hex, 16)))
-    .replace(/&#(\d+);/g, (_, dec) => String.fromCharCode(parseInt(dec, 10)))
+/**
+ * Fetch tweet data via the public oEmbed endpoint (no auth required).
+ * Returns { title, description, image, likes } where:
+ *   - description = tweet text (stripped of HTML)
+ *   - image       = first pic.twitter.com/… or pbs.twimg.com image found in the embed HTML
+ *   - title       = author name
+ */
+async function fetchOembed(tweetUrl) {
+  const endpoint =
+    "https://publish.twitter.com/oembed?" +
+    new URLSearchParams({
+      url: tweetUrl,
+      omit_script: "true",
+      dnt: "true",
+    }).toString();
+
+  const response = await fetch(endpoint, {
+    headers: { "User-Agent": "Mozilla/5.0 (compatible; FetchMeta/1.0)" },
+    // Allow up to 8 seconds per request
+    signal: AbortSignal.timeout(8000),
+  });
+
+  if (!response.ok) {
+    throw new Error(`oEmbed responded ${response.status} for ${tweetUrl}`);
+  }
+
+  const data = await response.json();
+
+  // data.html is the embeddable blockquote HTML — extract the tweet text from it
+  const embedHtml = data.html || "";
+
+  // Strip all HTML tags to get plain tweet text
+  let description = embedHtml
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
+    .replace(/<a[^>]*href="https?:\/\/t\.co\/[^"]*"[^>]*>.*?<\/a>/gi, "") // remove t.co links
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
-    .replace(/&amp;/g, "&")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/&apos;/g, "'");
-}
+    .replace(/\s+/g, " ")
+    .trim();
 
-function extractMeta(html) {
-  const result = {};
-  const titleMatch = html.match(/<title>([^<]*)<\/title>/i);
-  if (titleMatch) result.title = titleMatch[1].trim();
+  // The oEmbed html ends with "— AuthorName (@handle) Date" — strip that trailing attribution
+  description = description.replace(/—\s*.+?\(@[^)]+\)\s+\w+ \d+, \d{4}\s*$/, "").trim();
+  // Also strip a standalone trailing date like "July 15, 2025"
+  description = description.replace(/\b\w+ \d{1,2}, \d{4}\s*$/, "").trim();
 
-  const metaRegex = /<meta\s+(?:property|name)=["']([^"']+)["']\s+content=["']([^"']*)["'][^>]*>/gi;
-  let match;
-  while ((match = metaRegex.exec(html)) !== null) {
-    result[match[1].toLowerCase()] = match[2];
-  }
+  // author_name from oEmbed (e.g. "TIMM¥")
+  const title = data.author_name || "";
 
-  let description = result["og:description"] || result["twitter:description"] || result.description || "";
-  let title = description || result["og:title"] || result["twitter:title"] || result.title || "";
-  const image = result["og:image"] || result["twitter:image"] || result.image || "";
+  // Try to extract an image URL from the embed HTML.
+  // oEmbed HTML itself rarely includes images inline, but the tweet URL can be
+  // resolved to a card image via a second oEmbed call with maxwidth for rich format.
+  // As a practical fallback we look for pbs.twimg.com URLs embedded in the HTML.
+  let image = "";
+  const imgMatch =
+    embedHtml.match(/https:\/\/pbs\.twimg\.com\/[^\s"'<>]+(?:\.jpg|\.png|\.webp)/i) ||
+    embedHtml.match(/https:\/\/pic\.twitter\.com\/[^\s"'<>]+/i);
+  if (imgMatch) image = imgMatch[0];
 
-  title = decodeHtmlEntities(title)
-    .replace(/^[\u0022\u0027\u2018\u2019\u201C\u201D\u00AB\u00BB\u201E\u201F\s]+/, "")
-    .replace(/[\u0022\u0027\u2018\u2019\u201C\u201D\u00AB\u00BB\u201E\u201F\s]+$/, "");
-
-  if (title.includes(" on X")) title = title.split(" on X")[0].trim();
-  if (title.includes("(@_devTimmy)")) {
-    title = title.replace("𝗧𝗜𝗠𝗠¥ (@_devTimmy)", "").replace("TIMM¥ (@_devTimmy)", "").trim();
-  }
-
-  if (!description || description.length < 100) {
-    const scriptMatches = html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([^<]+)<\/script>/gi) || [];
-    for (const script of scriptMatches) {
-      const jsonMatch = script.match(/>([^<]+)<\/script>/);
-      if (!jsonMatch) continue;
-      try {
-        const jsonData = JSON.parse(jsonMatch[1]);
-        const candidates = [jsonData.description, jsonData.text, jsonData.articleBody].filter(Boolean);
-        for (const candidate of candidates) {
-          if (candidate.length > description.length) description = candidate;
+  // If no inline image was found, attempt a syndication API call which returns
+  // tweet card data including photo URLs (no auth required, best-effort).
+  if (!image) {
+    try {
+      // Extract tweet ID from URL (handles /status/NNNN and /status/NNNN?s=20 etc.)
+      const idMatch = tweetUrl.match(/\/status\/(\d+)/);
+      if (idMatch) {
+        const tweetId = idMatch[1];
+        const syndicationUrl = `https://cdn.syndication.twimg.com/tweet-result?id=${tweetId}&lang=en&features=tfw_timeline_list%3A%3Btfw_follower_count_sunset%3Atrue&token=x`;
+        const synRes = await fetch(syndicationUrl, {
+          headers: { "User-Agent": "Mozilla/5.0 (compatible; FetchMeta/1.0)" },
+          signal: AbortSignal.timeout(6000),
+        });
+        if (synRes.ok) {
+          const synData = await synRes.json();
+          // Photos live at tweet.photos[].url or tweet.mediaDetails[].media_url_https
+          const photos =
+            synData?.photos ||
+            synData?.mediaDetails?.filter((m) => m.type === "photo") ||
+            [];
+          if (photos.length > 0) {
+            image = photos[0].url || photos[0].media_url_https || "";
+          }
+          // Use tweet full_text if description is still empty
+          if (!description && synData?.text) {
+            description = synData.text.replace(/https:\/\/t\.co\/\S+/g, "").trim();
+          }
         }
-      } catch {
-        // Ignore malformed JSON-LD and continue with other metadata fallbacks.
       }
-    }
-
-    if (!description || description.length < 100) {
-      const tweetMatch =
-        html.match(/data-testid=["']tweet["'][^>]*>[\s\S]*?<div[^>]*lang=["'][^"']*["'][^>]*>([^<]+)<\/div>/i) ||
-        html.match(/class=["'][^"]*tweet[^"]*["'][^>]*>[\s\S]*?<span>([^<]{50,}?)<\/span>/i);
-      if (tweetMatch?.[1]) description = tweetMatch[1].trim();
-    }
-
-    if (!description || description.length < 100) {
-      const cleanHtml = html
-        .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, "")
-        .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
-        .replace(/<nav[^>]*>[\s\S]*?<\/nav>/gi, "")
-        .replace(/<header[^>]*>[\s\S]*?<\/header>/gi, "")
-        .replace(/<footer[^>]*>[\s\S]*?<\/footer>/gi, "");
-
-      const text = cleanHtml
-        .replace(/<[^>]+>/g, " ")
-        .replace(/\s+/g, " ")
-        .replace(/Log in|Sign up|Post|Share|Like|Reply|Repost/gi, "")
-        .replace(/𝗧𝗜𝗠𝗠¥|TIMM¥|@_devTimmy|\(@_devTimmy\)/g, "")
-        .replace(/on X:|on Twitter:/gi, "")
-        .replace(/\s+/g, " ")
-        .trim();
-
-      if (text.length > 100) description = text.substring(0, 400).trim();
+    } catch {
+      // Syndication is best-effort — silently ignore failures
     }
   }
 
-  if (description) {
-    description = description
-      .replace(/Log in|Sign up|Post|Share|Like|Reply|Repost/gi, "")
-      .replace(/on X:|on Twitter:/gi, "")
-      .replace(/\/ X Post/gi, "")
-      .replace(/["']?\s*\/\s*X\s*["']?/gi, "")
-      .replace(/https:\/\/t\.co\/[A-Za-z0-9]+/g, "")
-      .replace(/[ \t]+/g, " ")
-      .trim()
-      .replace(/^["'"'""„‟\s]+/, "");
-  }
-
-  const likeMatch =
-    html.match(/"like_count"\s*:\s*(\d+)/i) ||
-    html.match(/"favorite_count"\s*:\s*(\d+)/i) ||
-    html.match(/"likeCount"\s*:\s*(\d+)/i);
-  const visibleMatch =
-    html.match(/>([0-9][0-9,.]{0,6})<[^>]*>\s*(?:Likes|likes|Like)/i) ||
-    html.match(/Likes?\W*([0-9][0-9,.]{0,6})/i);
-  const likes = likeMatch
-    ? parseInt(likeMatch[1].replace(/,/g, ""), 10) || 0
-    : parseInt((visibleMatch?.[1] || "0").replace(/[,.]/g, ""), 10) || 0;
-
-  return {
-    title: decodeHtmlEntities(title).trim(),
-    description: decodeHtmlEntities(description).trim().substring(0, 500),
-    image: image.trim(),
-    likes,
-  };
+  return { title, description: description.substring(0, 500), image, likes: 0 };
 }
 
 async function handleFetchMeta(req, res) {
@@ -210,15 +198,7 @@ async function handleFetchMeta(req, res) {
     const results = await Promise.all(
       urls.map(async (urlValue) => {
         try {
-          const url = new URL(urlValue, "https://example.com").toString();
-          const response = await fetch(url, {
-            headers: {
-              "User-Agent": "Mozilla/5.0 (compatible; FetchMeta/1.0; +https://example.com)",
-            },
-          });
-          if (!response.ok) return { url: urlValue, title: "", description: "", image: "", likes: 0 };
-
-          const meta = extractMeta(await response.text());
+          const meta = await fetchOembed(urlValue);
           return {
             url: urlValue,
             title: meta.title || "",
@@ -226,7 +206,8 @@ async function handleFetchMeta(req, res) {
             image: meta.image || "",
             likes: meta.likes || 0,
           };
-        } catch {
+        } catch (err) {
+          console.error(`fetchOembed failed for ${urlValue}:`, err.message);
           return { url: urlValue, title: "", description: "", image: "", likes: 0 };
         }
       })

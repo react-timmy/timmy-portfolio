@@ -36,6 +36,8 @@ const eslintConfig = defineConfig([
         setTimeout: "readonly",
         clearTimeout: "readonly",
         TextDecoder: "readonly",
+        URLSearchParams: "readonly",
+        AbortSignal: "readonly",
       },
       parserOptions: {
         ecmaFeatures: {

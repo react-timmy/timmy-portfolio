@@ -265,10 +265,12 @@ export default function Hero() {
             onMouseEnter={e => { (e.currentTarget).style.color = "#ffffff"; }}
             onMouseLeave={e => { (e.currentTarget).style.color = "#71717a"; }}
           >
+            {/* Rounded-square X icon — mirrors the LinkedIn icon style */}
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+              <rect width="26" height="26" rx="4" fill="currentColor"/>
+              <path d="M13.543 10.91 18.557 5h-1.198l-4.363 5.007L9.42 5H5.25l5.265 7.566L5.25 19h1.198l4.603-5.28L14.579 19H18.75l-5.207-8.09Zm-1.63 1.87-.533-.755-4.243-5.998h1.827l3.423 4.841.533.755 4.452 6.294h-1.827l-3.632-5.137Z" fill="white"/>
             </svg>
-            @_devTimmy
+            TIMM¥
           </a>
           <span style={{ width: 1, height: 12, background: "#27272a" }} />
           <a

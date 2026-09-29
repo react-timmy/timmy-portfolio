@@ -21,6 +21,8 @@ const COVER_IMAGES: Record<string, string | string[]> = {
   filmsort:        "/filmsortpj_banner.png",
   shazam:          "/shazambanner.png",
   buildoors:       "/buildoorsbanner.png",
+  "mamuda-beverages": "/pop-cola-project.png",
+  "the-bridal-desk": "/The-Bridal-Desk.mp4",
   "bless-network": [
     "/blessnetworkpj_bannercarousel1.jpg",
     "/blessnetworkbannercarousel2.jpg",
@@ -155,10 +157,26 @@ export default function Projects() {
                 {/* ── Cover ───────────────────────────────────────────── */}
                 <div style={{ position: "relative", width: "100%", paddingTop: "52%", background: coverBg, overflow: "hidden" }}>
 
-                  {/* Real cover photo / carousel */}
+                  {/* Real cover photo / carousel / video */}
                   {coverImgs && (
                     coverImgs.length > 1
                       ? <CoverCarousel images={coverImgs} alt={p.title} />
+                      : coverImgs[0].endsWith('.mp4')
+                      ? (
+                        <video
+                          src={coverImgs[0]}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          style={{
+                            position: "absolute", inset: 0,
+                            width: "100%", height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                          }}
+                        />
+                      )
                       : (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img

@@ -122,16 +122,20 @@ async function fetchOembed(tweetUrl) {
   const embedHtml = data.html || "";
 
   // Strip all HTML tags to get plain tweet text
+  // First, preserve line breaks by converting <br> and </p> to newlines
   let description = embedHtml
     .replace(/<style[^>]*>[\s\S]*?<\/style>/gi, "")
     .replace(/<a[^>]*href="https?:\/\/t\.co\/[^"]*"[^>]*>.*?<\/a>/gi, "") // remove t.co links
-    .replace(/<[^>]+>/g, " ")
+    .replace(/<br\s*\/?>/gi, "\n") // convert <br> to newline
+    .replace(/<\/p>/gi, "\n\n") // convert </p> to double newline
+    .replace(/<[^>]+>/g, "") // strip remaining HTML tags
     .replace(/&amp;/g, "&")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
-    .replace(/\s+/g, " ")
+    .replace(/\n{3,}/g, "\n\n") // collapse 3+ newlines to 2
+    .replace(/ +/g, " ") // collapse multiple spaces to single space
     .trim();
 
   // The oEmbed html ends with "— AuthorName (@handle) Date" — strip that trailing attribution

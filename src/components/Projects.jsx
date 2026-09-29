@@ -30,6 +30,7 @@ const COVER_IMAGES = {
 /* Projects that use a video cover instead of an image */
 const COVER_VIDEOS = {
   "mamuda-beverages": "/pop-cola-video",
+  "the-bridal-desk": "/The-Bridal-Desk.mp4",
 };
 
 /* Fallback gradient for projects without a photo */

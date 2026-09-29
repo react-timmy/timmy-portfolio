@@ -10,9 +10,24 @@ const POSTS = [
 ];
 
 const ARTICLES = [
-  "https://x.com/_devTimmy/status/2011106010354638878?s=20",
-  "https://x.com/_devTimmy/status/2077277282985517261?s=20",
-  "https://x.com/_devTimmy/status/2013150374794874986?s=20",
+  {
+    url: "https://x.com/_devTimmy/status/2011106010354638878?s=20",
+    title: "You're Already Playing Wabi - You Just Don't Know It Yet",
+    description: "",
+    image: "https://pbs.twimg.com/media/G-je__rXoAAUcEb?format=jpg&name=small",
+  },
+  {
+    url: "https://x.com/_devTimmy/status/2077277282985517261?s=20",
+    title: "how to get started on InterLink Network (the alpha you asked for, TGE soon)",
+    description: "",
+    image: "https://pbs.twimg.com/media/HNP1qUDXoAAmGLP?format=jpg&name=small",
+  },
+  {
+    url: "https://x.com/_devTimmy/status/2013150374794874986?s=20",
+    title: "\"The superior product will win in the end.\" - Elon Musk",
+    description: "",
+    image: "https://pbs.twimg.com/media/G-5NJgDWIAAJB3A?format=jpg&name=small",
+  },
 ];
 
 function XLogo({ size = 16 }) {
@@ -75,42 +90,26 @@ function ArticleCard({ meta }) {
             alignItems: 'center',
             justifyContent: 'center',
             padding: '16px',
-            background: 'linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.35) 40%, rgba(0,0,0,0.0) 70%)',
-            backdropFilter: 'blur(4px)',
-            WebkitBackdropFilter: 'blur(4px)',
+            background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.6))',
+            backdropFilter: 'blur(2px)',
+            WebkitBackdropFilter: 'blur(2px)',
             boxSizing: 'border-box',
             zIndex: 2,
           }}>
             {(() => {
-              const extractTitleFromDescription = (desc) => {
-                if (!desc) return '';
-                // prefer first non-empty line
-                const lines = desc.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-                if (lines.length) {
-                  const first = lines[0];
-                  // if first line is short-ish, use it; otherwise take first sentence
-                  if (first.length <= 120) return first;
-                  const sentence = first.split(/[.!?]\s/)[0];
-                  if (sentence && sentence.length <= 140) return sentence;
-                  return first.slice(0, 140).trim();
-                }
-                // fallback: take first 100 chars
-                return desc.trim().slice(0, 140);
-              };
-
-              const titleText = (meta.title && meta.title.trim()) ? meta.title.trim() : extractTitleFromDescription(meta.description);
+              const titleText = meta.title && meta.title.trim() ? meta.title.trim() : '';
               if (!titleText) return null;
               return (
                 <div style={{
                   color: '#fff',
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: 800,
                   textAlign: 'center',
-                  lineHeight: 1.15,
-                  textShadow: '0 8px 28px rgba(0,0,0,0.6)',
+                  lineHeight: 1.25,
+                  textShadow: '0 2px 12px rgba(0,0,0,0.8), 0 4px 24px rgba(0,0,0,0.6)',
                   overflow: 'hidden',
                   display: '-webkit-box',
-                  WebkitLineClamp: 3,
+                  WebkitLineClamp: 4,
                   WebkitBoxOrient: 'vertical',
                 }}>
                   {titleText}
@@ -310,7 +309,7 @@ export default function Web3Community() {
   const scrollPos = useRef(0);
 
   const [metaList, setMetaList] = useState(null);
-  const [articlesList, setArticlesList] = useState(null);
+  const [articlesList, setArticlesList] = useState(ARTICLES);
 
   useEffect(() => {
     let reqId;
@@ -353,31 +352,6 @@ export default function Web3Community() {
         }
       } catch (err) {
         setMetaList(POSTS.map(u => ({ url: u, title: '', description: '', image: '' })));
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
-
-  useEffect(() => {
-    // Fetch scraped metadata for articles
-    let cancelled = false;
-    (async () => {
-      try {
-        const API_URL = import.meta.env.VITE_API_URL || 'https://timmy-portfolio-vzev.onrender.com';
-        const res = await fetch(`${API_URL}/api/fetch-meta`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ urls: ARTICLES }),
-        });
-        const data = await res.json();
-        if (cancelled) return;
-        if (data?.ok && Array.isArray(data.results)) {
-          setArticlesList(data.results.map((r) => ({ url: r.url, title: r.title || '', description: r.description || '', image: r.image || '', likes: r.likes || 0 })));
-        } else {
-          setArticlesList(ARTICLES.map(u => ({ url: u, title: '', description: '', image: '', likes: 0 })));
-        }
-      } catch (err) {
-        setArticlesList(ARTICLES.map(u => ({ url: u, title: '', description: '', image: '' })));
       }
     })();
     return () => { cancelled = true; };

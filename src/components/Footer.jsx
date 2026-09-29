@@ -13,7 +13,7 @@ const NAV_COLS = [
     ],
   },
   {
-    heading: "Connect",
+    heading: "Connect With Me",
     links: [
       { label: "X / Twitter", href: "https://x.com/_devTimmy"                      },
       { label: "LinkedIn",    href: "https://www.linkedin.com/in/devtimmy"          },
